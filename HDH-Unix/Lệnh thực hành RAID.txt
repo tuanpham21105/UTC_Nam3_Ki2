@@ -1,0 +1,31 @@
+Phân vùng lại /dev/sdb
+
+Thiết lập RAID:
+	Tạo RAID: # mdadm  -C /dev/md1 -l 1 -n 2 /dev/sdb2 /dev/sdc2
+	Kiểm tra RAID: # cat /proc/mdstat
+	Định dạng: # mkfs.ext4 /dev/md1
+	Lưu cấu hình: # mdadm --detail --scan --verbose >> /etc/mdadm.conf
+	Kiểm tra cấu hình: cat /etc/mdadm.conf
+	Tạo thư mục chứa dữ liệu: # mkdir /raid1
+	Thêm mount tự động cho RAID: # gedit /etc/fstab -> Thêm dòng: /dev/md1	/raid1	ext4	defaults	0 0
+	Kiểm tra RAID: mount -a -> mount | grep raid
+	Thêm dữ liệu vào thư mục RAID: cp /etc/* /raid1
+	Kiểm tra dữ liệu trong RAID: ls -l /raid1
+	Chụp màn hình 2 lệnh: cat /proc/mdstat và cat /etc/mdadm.conf
+Phá:
+	Xóa 1 trong disk dùng trong RAID
+	Khởi động lại 
+	Đợi nó hiển thị màn hình lỗi
+	Nhập mk
+Sửa:
+	Chụp màn hình lệnh này và lệnh dưới: /proc/mdstat
+	Thêm partition thay thế: mdadm --manage /dev/md1 --add /dev/sdd2
+	Lệnh sửa /etc/fstab: vi /etc/fstab
+	Bấm insert, thêm # các dòng mount của /etc/sdb
+	Nhấn esc, gõ :x để thoát
+	Gõ init 6 để khởi động lại
+Sau khi sửa:
+	Chụp màn hình lệnh: /proc/mdstat
+	
+	
+	
