@@ -229,7 +229,7 @@
 
 - Giả sử khoá là một chữ có độ dài d được viết dạng K = K1K2 · · · Kd, trong đó Ki nhận giá trị nguyên từ 0 đến 25.
 
-- Ví dụ:
+- Ví dụ:Mã Vigenere dùng nhiều bảng chữ để mã, tiến hành nhiều mã Caesar lên bản rõ với nhiều khóa khác nhau cho mỗi kí tự.The quick brown fox jumps over 13 lazy dogs.
 
 <img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-01-22-20-51-04-image.png" title="" alt="" data-align="center">
 
