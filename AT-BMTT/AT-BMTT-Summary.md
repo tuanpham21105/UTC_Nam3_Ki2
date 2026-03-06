@@ -266,3 +266,9 @@
 - Số dòng chính là khoá.
 
 <img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-01-22-21-06-09-image.png" title="" alt="" data-align="center">
+
+## Chương 3: Số học đồng dư
+
+### 1. Số học đồng dư
+
+@

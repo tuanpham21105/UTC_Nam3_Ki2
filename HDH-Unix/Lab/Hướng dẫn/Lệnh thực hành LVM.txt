@@ -1,0 +1,28 @@
+Lệnh thực hành LVM:
+
+Tạo thêm các ổ đĩa ảo kiểu SCSI
+
+Truy cập quyền root: su
+
+Phân vùng các ổ đĩa ảo:
+	Truy cập trình quản lý ổ đĩa: fdisk /dev/<tên ổ đĩa(thường là sdb, sdc,...)>
+		Lệnh xem bảng phân vùng: p
+		Lệnh thêm phân vùng: n
+			Chọn loại phân vùng: Để mặc định
+			Chọn số thứ tự phân vùng: Để mặc định
+			Chọn First Sector: Để mặc định
+			Chọn Last Sector: 
+				Để mặc định nếu muốn lấy phần còn lại
+				+<Số dung lượng dành cho phân vùng>G (VD: +10G)
+		Lệnh lưu phân vùng: w
+	Định dạng các phân vùng: mkfs.ext4 /dev/<Tên ổ đĩa. VD: sdb1, sdb2, sdb3,...>
+	Tạo các thư mục để mount ổ đĩa vào: mkdir /<Tên thư mục> (Gợi ý: nếu là ổ sdb, tên thư mục b1, b2,...)
+	Mount ổ đĩa vào thư mục: mount /dev/<Tên ổ đĩa. VD: sdb1, sdb2, sdb3,...> /<Tên thư mục. VD: b1, b2, b3,...>
+	Mount ổ đĩa tự động khi khởi động:
+		Mở file định nghĩa ổ đĩa: gedit hoặc nano hoặc vi /etc/fstab
+		Thêm các dòng định nghĩa ổ đĩa: <device>  <mount point>  <type>  <options>  <dump>  <pass> (VD: /dev/sdb1 /b1 ext4 defaults 0 0)
+	
+		
+	
+	
+	
