@@ -99,16 +99,13 @@
    - Polymorphism (Tính đa hình) là khả năng 1 đối tượng có thể biểu diễn dưới nhiều hình dạng, diễn giải theo nhiều cách khác nhau, giúp ẩn đi các chi tiết triển khai khác nhau nhưng chung một "giao diện".
 
 3. 
-   
-   
-   - Lớp Account
-     
-     - Thuộc tính: owner, balance
-     
-     - Phương thức: deposit(), withdraw()
-   
-   - Xây dựng lớp SavingsAccount kế thừa từ Account, có Account là lớp cha và SavingsAccount là lớp con, theo định nghĩa tính kế thừa, lớp SavingsAccount sẽ được kế thừa tất cả thuộc tính và hành vi từ lớp cha là Account.
+- Lớp Account
+  
+  - Thuộc tính: owner, balance
+  
+  - Phương thức: deposit(), withdraw()
 
+- Xây dựng lớp SavingsAccount kế thừa từ Account, có Account là lớp cha và SavingsAccount là lớp con, theo định nghĩa tính kế thừa, lớp SavingsAccount sẽ được kế thừa tất cả thuộc tính và hành vi từ lớp cha là Account.
 4. Ví dụ C++ về hệ thống Library System:
 
 ```C++
@@ -455,9 +452,7 @@ class EBook : public Book {
    
    - Ví dụ: Ca sử dụng "Cho mượn sách" sẽ thực hiện cả "Tìm kiếm sách trong kho".
 
-7. 
-   
-   - Một ca sử dụng tốt cần đảm bảo những yếu tố sau: 
+7. - Một ca sử dụng tốt cần đảm bảo những yếu tố sau: 
      
      - Thỏa mãn một mục tiêu của tác nhân
    
@@ -468,8 +463,6 @@ class EBook : public Book {
      - Liệt kê được các ca sử dụng 
      
      - Quan hệ giữa các chức năng phù hợp
-       
-       
 
 ## Bài 5: Biểu đồ hành động
 
@@ -567,6 +560,172 @@ class EBook : public Book {
    
    - Thực hiện tiến trình song song
 
+## Bài 6: Phân tích đối tượng
 
+### Phân tích đối tượng
 
-## Bài 6: Phân tích hướng đối tượng
+- Vai trò:
+  
+  - Là cầu nối giữa phân tích yêu cầu và thiết kế
+  
+  - Giúp hiểu rõ:
+    
+    - Những thực thể nghiệp vụ nào cần quản lý
+    
+    - Chúng có quan hệ với nhau ra sao
+  
+  - Tạo nền cho xây dựng biểu đồ lớp phân tích
+  
+  - Mô hình phân tích: tập trung vào khái niệm nghiệp vụ
+
+- Mục tiêu của phân tích đối tượng:
+  
+  - Xác định các lớp khái niệm trong miền bài toán
+  
+  - Ghi nhận các thuộc tính (attributes) quan trọng và mối quan hệ
+  
+  - Tuyệt đối chưa quan tâm đến chi tiết giao diện và cơ sở dữ liệu để tránh lỗi "Thiết kế sớm"
+
+- Đầu vào:
+  
+  - Mô tả use case, các kịch bản
+  
+  - Thuật ngữ nghiệp vụ từ các bên
+  
+  - Tài liuệ hiện có
+
+- Đầu ra:
+  
+  - Danh sách ban đầu các đối tượng tiềm năng
+  
+  - Đặc tả sơ bộ về các đối tượng đó
+  
+  - Biểu đồ lớp phân tích
+
+### Đối tượng
+
+- Đối tượng là các thực thể trong thế giới thực (vật lý hoặc khái niệm)
+
+- Mỗi đối tượng gồm:
+  
+  - Trạng thái (giá trị thuộc tính)
+  
+  - Ứng xử (Các hành động)
+  
+  - Định danh (Duy nhất trong bộ nhớ)
+
+### Sơ đồ đối tượng
+
+- Đối tượng A phụ thuộc vào đối tượng B
+
+- Ví dụ: Khách hàng ann thuê xe đạp ladies[8]
+
+<img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-07-10-32-08-image.png" title="" alt="" data-align="center">
+
+- Ưu điểm:
+  
+  - Mô tả quan hệ giữa các đối tượng
+  
+  - Làm rõ hơn các hệ thống phức tạp **tại 1 thời điểm**
+
+### Lớp
+
+- Lớp là định nghĩa trừu tượng (khuôn mẫu) cho các đối tượng có chung đặc tính
+
+- Một đối tượng là 1 thể hiện cụ thể (instance) của một lớp
+
+- Lớp giúp thực hiện trừu tượng hóa dữ liệu, bao gói và che giấu thông tin
+
+### Sơ đồ lớp
+
+<img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-07-10-36-05-image.png" title="" alt="" data-align="center">
+
+- Lớp A liên kết với lớp B tương đương với việc các đối tượng của A **có thể tương tác** được với các đối tượng của B
+
+### Các liên kết giữa các lớp
+
+- Kết hợp (Association): Liên kết cơ bản, cho phép các đối tượng tương tác với nhau. Đi kèm với **Tính bội (Multiplicity)** để xác định giới hạn số lượng đối tượng tham gia.
+  
+  - Ví dụ: Một hoặc nhiều khách hàng có thể thuê một hoặc nhiều xe đạp
+
+<img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-07-10-42-17-image.png" title="" alt="" data-align="center">
+
+- Liên kết bội (Multiplicity):
+  
+  <img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-07-10-43-28-image.png" title="" alt="" data-align="center">
+
+- Kết tập (Aggregation): Quan hệ "tổng thể - thành phần", mô tả thường có các cụm từ "A là một phần của B" hoặc "B gồm có A, C,..."
+  
+  - Ví dụ: Ô tô gồm có 4 bánh, 2 hoặc 4 hoặc 5 cánh cửa và 1 động cơ
+
+<img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-07-10-46-50-image.png" title="" alt="" data-align="center">
+
+- Gộp (Composition): Một dạng kết tập chặt chẽ hơn, trong đó đối tượng thành phần ko thể tồn tại độc lập nếu đối tượng tổng thể bị hủy bỏ
+  
+  - Ví dụ: Người máy gồm có cánh tay robot, bánh xe robot
+
+<img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-07-10-49-05-image.png" title="" alt="" data-align="center">
+
+- Kế thừa (Inheritance): Quan hệ "là một" (is-a) hoặc "là một loại" (is-a-kind-of), giúp tổng quát hóa các đặc tính chung vào lớp cha và chuyên biệt hóa ở lớp con.
+
+<img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-07-10-51-30-image.png" title="" alt="" data-align="center">
+
+- Lớp kết hợp (Association Class): Sử dụng khi bản thân mối liên kết giữa 2 lớp chứa các thuộc tính riêng
+  
+  -  Ví du: Khách hàng thuê xe đạp, lớp thuê chứa ngày bắt đầu thuê, ngày kết thúc,...
+
+<img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-07-11-03-32-image.png" title="" alt="" data-align="center">
+
+### Tiêu chuẩn của một lớp thiết kế tốt
+
+- Các lớp nên phản ánh đúng đối tượng trong phạm vi bài toán
+
+- Một lớp cần có cả dữ liệu và hành vi, tránh lớp chỉ toàn dữ liệu hoặc chỉ toàn hành vi
+
+- Lớp phải có tínhcố kết cao, nên tập trung vào chỉ 1 trách nghiệm chính
+
+### Câu hỏi
+
+1. Sự khác nhau giữa đối tượng và lớp:
+   
+   - **Lớp:** Là một định nghĩa trừu tượng, đóng vai trò như một khuôn mẫu hoặc bản thiết kế cho các đối tượng có cùng đặc tính chung. Lớp giúp thực hiện trừu tượng hóa dữ liệu, bao gói và che giấu thông tin.
+     
+     - Ký hiệu: Thể hiện bằng hình chữ nhật chia làm 3 phần: Tên lớp (trên cùng), Các thuộc tính (giữa) và Các thao tác/phương thức (dưới cùng).
+       
+       <img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-07-11-19-59-image.png" title="" alt="" data-align="center">
+   
+   - **Đối tượng:** Là một thực thể cụ thể (instance) được tạo ra từ một lớp. Thế giới thực bao gồm các đối tượng vật lý (xe tải, sinh viên), đối tượng khái niệm (quy trình) hoặc đối tượng phần mềm.
+     
+     - Ký hiệu: Thể hiện bằng hình chữ nhật gồm tên đối tượng và tên lớp (thường gạch chân), theo sau là các giá trị thuộc tính cụ thể (ví dụ: `ann :Customer`)
+       
+       <img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-07-11-20-27-image.png" title="" alt="" data-align="center">
+
+2. Các đặc trung của một đối tượng là:
+   
+   - Trạng thái: được xác định bởi giá trị hiện tại của các thuộc tính mà đối tượng đang nắm giữ
+   
+   - Ứng xử: Thể hiện qua các hành động và thao tác mà đối tượng có thể thực hiện
+   
+   - Định danh: Tính duy nhất của mỗi đối tượng trong bộ nhớ, giúp phân biệt nó với các đối tượng khác dù chúng có cùng trạng thái
+
+3. Các đối tượng giao tiếp với nhau qua liên kết, khi lớp A liên kết với lớp B, đối tượng của lớp A có thể tương tác với đối tượng của lớp B
+
+4. Bốn loại liên kết giữa các lớp:
+   
+   - **Kết hợp (Association):** Là liên kết cơ bản và phổ biến nhất thể hiện sự tương tác giữa hai lớp. Nó thường đi kèm với **tính bội (multiplicity)** để xác định giới hạn số lượng đối tượng tham gia (ví dụ: 1, 0..*, 1..*).
+   
+   - **Kết tập (Aggregation):** Thể hiện quan hệ "tổng thể - thành phần" (whole-part). Trong mô tả thường có cụm từ "là một phần của" hoặc "gồm có" (ví dụ: Xe hơi gồm có động cơ, bánh xe).
+   
+   - **Gộp (Composition):** Là một dạng kết tập chặt chẽ hơn. Điểm khác biệt quan trọng là đối tượng thành phần không thể tồn tại độc lập nếu đối tượng tổng thể bị hủy bỏ (ví dụ: Cơ thể và các bộ phận như đầu, tay, chân).
+   
+   - **Kế thừa (Inheritance):** Thể hiện quan hệ "là một" (is-a) hoặc "là một loại" (is-a-kind-of). Nó giúp tổng quát hóa (Generalization) các đặc tính chung vào lớp cha và chuyên biệt hóa (Specialization) ở các lớp con.
+
+5. Tiêu chuẩn để coi là một lớp tốt:
+   
+   - **Phản ánh đúng miền bài toán (Problem domain)**
+   
+   - **Đầy đủ chức năng (Functionality)**
+   
+   - **Tính cố kết cao (High Cohesion)**
+
+6. Không nên thêm các lớp `BorrowForm` và `LoanController` vào. Vì những lớp này không phải là lớp miền nghiệp vụ (domain class) -> lỗi Thiết kế sớm

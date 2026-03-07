@@ -1,0 +1,36 @@
+Lệnh thực hành RAID
+
+Phân vùng cho các ổ cứng
+
+Vào chế độ root
+
+Thiết lập RAID:
+	Tạo RAID: # mdadm  -C /dev/<Tên folder raid. VD: md1, md5> -l <Raid level. VD: 1, 5> -n <Số lượng thiết bị. VD: 2, 3> <Các phần vùng Raid. VD: /dev/sdb2 /dev/sdc2>
+	Định dạng: # mkfs.ext4 /dev/<Tên folder Raid. VD: md1>
+	Lưu cấu hình: # mdadm --detail --scan --verbose >> /etc/mdadm.conf
+	Tạo thư mục chứa dữ liệu: # mkdir /<Tên thư mục chứa dữ liệu. VD: raid1, raid5>
+	Thêm mount tự động cho RAID: # gedit /etc/fstab 
+		Thêm dòng mount raid tự động: /dev/<Tên folder Raid>	/<Tên thư mục chứa dữ liệu>	ext4	defaults	0 0
+	Kiểm tra RAID: mount -a -> mount | grep raid
+	Thêm dữ liệu vào thư mục RAID: cp /etc/* /<Tên thư mục chứa dữ liệu>
+	Kiểm tra dữ liệu trong RAID: ls -l /<Tên thư mục chứa dữ liệu>
+	Kiểm tra RAID: # cat /proc/mdstat
+	Kiểm tra cấu hình: cat /etc/mdadm.conf
+	
+Phá ổ đĩa:
+	Xóa 1 trong các disk ảo dùng trong RAID.
+	Khởi động lại 
+	Đợi nó hiển thị màn hình lỗi
+	Nhập mật khẩu root
+
+Sửa:
+	Chụp màn hình lệnh này và lệnh dưới: /proc/mdstat
+	Thêm partition thay thế: mdadm --manage /dev/<Tên folder Raid> --add /dev/<Tên phân vùng thay thế. VD: sdd2>
+	Lệnh sửa /etc/fstab: vi /etc/fstab
+	Bấm insert, thêm # các dòng mount của /etc/<Tên các lệnh mount có chứa đường dẫn đến phân vùng bị phá> để comment lại
+	Nhấn esc, gõ :x để thoát
+	Gõ init 6 để khởi động lại
+	
+Sau khí phá:
+	Kiểm tra lại phân vùng RAID bằng lệnh: cat /proc/mdstat
+
