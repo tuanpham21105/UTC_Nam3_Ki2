@@ -729,3 +729,189 @@ class EBook : public Book {
    - **Tính cố kết cao (High Cohesion)**
 
 6. Không nên thêm các lớp `BorrowForm` và `LoanController` vào. Vì những lớp này không phải là lớp miền nghiệp vụ (domain class) -> lỗi Thiết kế sớm
+
+
+
+## Bài 7: Xác định lớp và thuộc tính
+
+### Biểu đồ lớp
+
+- **Tầm quan trọng:** Biểu đồ lớp là trung tâm của quá trình phân tích thiết kế
+
+- **Đặc điểm:** Nó mô hình hóa cấu trúc của hệ thống (structural model), thể hiện các đối tượng và cách chúng liên kết với nhau.
+
+- **Tiến trình xây dựng:** Biểu đồ lớp được xây dựng dần dần, bao gồm các lớp thực thể (miền bài toán), các lớp giao diện và các lớp điều khiển.
+
+- **Các bước chính:**
+  
+  1. Xác định đối tượng và lớp tương ứng.
+  
+  2. Xác định các thuộc tính cho từng lớp.
+  
+  3. Xác định mối quan hệ (multiplicity, role).
+  
+  4. Phân bổ trách nhiệm cho các lớp.
+
+### Kỹ thuật xác định lớp
+
+- 2 phương pháp:
+  
+  - **Dựa trên phân loại (Categorization):** Các khái niệm được chuyển thành đối tượng dựa trên thực thể vật chất (Xe, Sách), vai trò (Khách hàng, Giáo viên), các tương tác (Thuê, Mượn) hoặc tổ chức (Công ty, Khoa).
+  
+  - **Phân tích danh từ (Noun Analysis):** Dựa trên văn bản mô tả hệ thống, các danh từ/cụm danh từ thường là đối tượng hoặc thuộc tính, trong khi động từ thường là các thao tác (operations).
+    
+    - **Quy trình:** Tìm danh từ -> Gạch chân -> Loại bỏ danh từ không phù hợp -> Sắp xếp thành lớp ứng viên.
+
+### Tiêu chí giữ/bỏ lớp ứng viên
+
+- Để tối ưu hóa mô hình, cần sàng lọc các lớp ứng viên:
+  
+  - **Giữ lại nếu:** Là thực thể nghiệp vụ quan trọng, bền vững, có dữ liệu riêng và cần hành vi đi kèm.
+  
+  - **Loại bỏ nếu:**
+    
+    - Chỉ là thuộc tính của một lớp khác (Địa chỉ, Màu sắc).
+    - Là chi tiết kỹ thuật/giao diện (Biểu mẫu, Cơ sở dữ liệu).
+    - Là hành động (Mượn, Trả - nên là phương thức).
+    - Nằm ngoài phạm vi hệ thống hoặc trùng lặp ý nghĩa.
+
+### Xác định các thuộc tính
+
+- Thuộc tính được xác định qua các danh từ chỉ giá trị (không đủ độc lập để làm lớp) và là các thành phần thuộc về lớp mà nó mô tả.
+
+#### Câu hỏi
+
+1. Tầm quan trọng của mô hình hóa cấu trúc hệ thống (Structural modeling)
+- **Định nghĩa cấu trúc:** Mô hình hóa cấu trúc giúp định nghĩa và thể hiện cách các đối tượng trong hệ thống được tổ chức và liên kết với nhau.
+- **Vai trò trung tâm:** Biểu đồ lớp (công cụ chính của mô hình hóa cấu trúc) được coi là trung tâm của toàn bộ quá trình phân tích và thiết kế hệ thống.
+- **Sự tiến triển:** Mô hình này không cố định mà được xây dựng, bồi đắp dần dần qua các giai đoạn phát triển, từ các lớp thực thể nghiệp vụ đến các lớp giao diện và điều khiển.
+2. Các bước chính để xây dựng biểu đồ lớp
+- Theo tài liệu, quy trình xây dựng biểu đồ lớp gồm 4 bước chính:
+  
+  - **Xác định đối tượng:** Tìm các đối tượng trong phạm vi bài toán và xác định các lớp tương ứng.
+  
+  - **Xác định thuộc tính:** Tìm các đặc điểm, thông tin cần lưu trữ cho từng lớp.
+  
+  - **Xác định mối quan hệ:** Thiết lập các liên kết giữa các lớp, xác định tính bội (multiplicity) và vai trò (role) của từng lớp trong mối quan hệ đó.
+  
+  - **Phân bổ trách nhiệm:** Xác định các hành vi hoặc thao tác mà mỗi lớp phải thực hiện.
+3. Bốn loại đối tượng thường gặp khi phân loại
+- Khi thực hiện xác định lớp dựa trên phương pháp phân loại (categorization), 4 loại đối tượng thường được chuyển thành lớp bao gồm:
+  
+  - **Các thực thể vật chất:** Ví dụ như Xe (Bike), Sách (Book).
+  
+  - **Các vai trò:** Ví dụ như Nhân viên tiếp tân (Receptionist), Khách hàng (Customer), Giáo viên (Teacher).
+  
+  - **Các tương tác:** Ví dụ như việc Thuê (Hire), việc Mượn (Loan).
+  
+  - **Các tổ chức:** Ví dụ như Công ty (Company), Khoa (Faculty).
+4. Kỹ thuật phân tích danh từ (Noun analysis)
+- Đây là kỹ thuật dựa trên đề nghị của Abbott để tìm kiếm các thành phần của biểu đồ lớp từ văn bản mô tả hệ thống. Quy trình thực hiện gồm:
+  
+  - **Nguyên tắc cơ bản:** Các danh từ/cụm danh từ thường là đối tượng hoặc thuộc tính; các động từ thường là các thao tác (operations).
+  
+  - **Các bước thực hiện:**
+    
+    1. Tìm các danh từ trong mô tả bài toán hoặc kịch bản use case.
+    2. Gạch chân các danh từ và cụm danh từ đó.
+    3. Sàng lọc và loại bỏ các danh từ không phù hợp (như danh từ chỉ thuộc tính, chi tiết kỹ thuật, hoặc danh từ trùng lặp).
+    4. Sắp xếp những danh từ còn lại thành các lớp ứng viên.
+5. Bốn loại liên kết (quan hệ) giữa các lớp
+- Dựa trên nội dung các ví dụ và phần tinh chỉnh trong tài liệu, các loại liên kết chính bao gồm:
+  
+  - **Kết hợp (Association):** Mối quan hệ tương tác cơ bản giữa các lớp (ví dụ: Khách hàng và Thanh toán).
+  
+  - **Lớp kết hợp (Association Class):** Khi bản thân mối liên kết chứa thông tin riêng (ví dụ: lớp Thuê - Hire chứa ngày thuê, ngày trả).
+  
+  - **Kế thừa (Inheritance/Generalization):** Quan hệ giữa lớp tổng quát và lớp chuyên biệt khi chúng có nhiều điểm chung (ví dụ: Bike và SpecialistBike).
+  
+  - **Kết tập/Gộp (Aggregation/Composition):** Mối quan hệ phần thân - thành phần (được thể hiện qua ký hiệu hình thoi trong các sơ đồ bài tập).
+6. Mối liên hệ giữa Ca sử dụng (Use case) và Biểu đồ lớp
+- **Nguồn dữ liệu:** Kịch bản của Use case là nguồn tài liệu quan trọng để thực hiện phân tích danh từ nhằm xác định lớp và thuộc tính.
+
+- **Xây dựng lớp điều khiển:** Các lớp giao diện và lớp điều khiển trong biểu đồ lớp thường được xây dựng dựa trên nhu cầu thực hiện của từng ca sử dụng cụ thể.
+
+- **Phân bổ trách nhiệm:** Use case giúp xác định các hành vi cần thiết mà các lớp phải phối hợp thực hiện, từ đó giúp phân bổ trách nhiệm (operations) cho từng lớp một cách chính xác.
+
+
+
+## Bài 8: Kỹ thuật CRC
+
+### Khái niệm CRC
+
+- CRC là viết tắt cho ba thành phần cốt lõi:
+  
+  - **C - Class (Lớp):** Tên lớp đang được xem xét.
+  
+  - **R - Responsibility (Trách nhiệm):** Những nvu, chức năng mà lớp đó phải thực hiện.
+  
+  - **C - Collaboration (Cộng tác):** Các lớp khác mà lớp này cần tương tác hoặc nhờ cậy để hoàn thành trách nhiệm của mình.
+
+- Kỹ thuật thẻ CRC được đưa vào để giúp xác định các hoạt động của một lớp thông qua việc phân tích trách nhiệm của từng lớp.
+
+### Lí do và cách làm thẻ CRC
+
+- **Lý do sử dụng:**
+  
+  - Là công cụ đơn giản, trực quan giúp phân chia trách nhiệm rõ ràng giữa các lớp.
+  - Rất hữu hiệu cho việc thảo luận nhóm (brainstorming) trong quá trình phân tích.
+
+- **Cách làm:**
+  
+  - Sử dụng các tờ bìa riêng biệt (thường có kích thước 10x15 cm) cho mỗi lớp.
+  - Chia thẻ thành 3 phần tương ứng với Class, Responsibility và Collaborator.
+  - Liệt kê các trách nhiệm và xác định các lớp tương tác tương ứng.
+  
+  <img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-07-21-41-56-image.png" title="" alt="" data-align="center">
+
+- Ví dụ: 
+  
+  - **Lớp Customer (Khách hàng):**
+    
+    - *Trách nhiệm:* Cung cấp thông tin khách hàng, theo dõi giao dịch thuê (cộng tác với lớp `Hire`), thêm các đối tượng thanh toán mới (cộng tác với lớp `Payment`).
+  
+  <img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-07-21-43-32-image.png" title="" alt="" data-align="center">
+
+### Xác định hoạt động
+
+- Từ các "trách nhiệm" đã ghi trên thẻ CRC, người phân tích sẽ tìm ra các phương thức cụ thể để đưa vào sơ đồ lớp.
+
+- Ví dụ:
+  
+  - Trách nhiệm "Cung cấp thông tin khách hàng" sẽ là hoạt động (phương thức) getCustomer()
+  
+  - Trách nhiệm "Theo dõi các giao dịch thuê" sẽ là hoạt động getCustomerHireTransactions()
+  
+  - Trách nhiệm "Thêm hóa đơn" sẽ là hoạt động addCustomerNewPayment(payment)
+
+### Đánh giá kỹ thuật CRC
+
+- **Đặc điểm:** Giúp xác định rõ vai trò từng lớp, linh hoạt và rất thuận tiện cho làm việc nhóm.
+
+- **Hạn chế:** Không mô tả được chi tiết **trình tự tương tác** (thứ tự trước sau) giữa các đối tượng.
+
+- **Giải pháp khắc phục:** Sử dụng kết quả từ bộ thẻ CRC làm đầu vào để xây dựng các **sơ đồ tương tác (Interaction Diagrams)** như sơ đồ tuần tự.
+
+### Câu hỏi
+
+1. 
+- **Thẻ CRC là gì?** CRC là viết tắt của **C**lass (Lớp), **R**esponsibility (Trách nhiệm) và **C**ollaboration (Cộng tác). Đây là một công cụ đơn giản và trực quan dưới dạng các tờ bìa dùng để mô hình hóa các thành phần của lớp.
+- **Tại sao sử dụng trong OOAD?** Trong phân tích thiết kế hướng đối tượng (OOAD), các sơ đồ lớp ban đầu thường chỉ có tên lớp và thuộc tính mà thiếu các hoạt động (operations). Thẻ CRC được sử dụng để xác định các hoạt động này bằng cách phân tích trách nhiệm của lớp và cách chúng phối hợp với nhau. Nó giúp hiểu rõ vai trò của từng lớp trong hệ thống.
+2. **Các yếu tố nắm bắt:** Một thẻ CRC nắm bắt ba thành phần chính:
+- **Tên lớp (Class name):** Xác định thực thể đang được xem xét.
+
+- **Trách nhiệm (Responsibility):** Các nhiệm vụ, chức năng hoặc thông tin mà lớp đó phải thực hiện hoặc nắm giữ.
+
+- **Cộng tác (Collaboration):** Danh sách các lớp khác mà lớp hiện tại cần tương tác để hoàn thành trách nhiệm của mình.
+3. **Số lượng trách nhiệm:** Tài liệu quy định sử dụng thẻ có kích thước giới hạn (**10x15 cm**). Việc giới hạn kích thước này nhằm mục đích buộc người phân tích phải giữ cho lớp đơn giản, tập trung vào các trách nhiệm cốt lõi và không để lớp trở nên quá phức tạp
+
+4. Kỹ thuật CRC rất phù hợp và thường được sử dụng cho việc thảo luận nhóm hoặc động não (brainstorming) trong giai đoạn phân tích.
+
+5. 
+- **Đặc điểm:** Giúp xác định rõ vai trò từng lớp, linh hoạt và rất thuận tiện cho làm việc nhóm.
+
+- **Hạn chế:** Không mô tả được chi tiết **trình tự tương tác** (thứ tự trước sau) giữa các đối tượng.
+
+
+
+## Bài 9: Các sơ đồ tương tác
