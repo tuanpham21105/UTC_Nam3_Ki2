@@ -672,7 +672,7 @@ class EBook : public Book {
 
 - Lớp kết hợp (Association Class): Sử dụng khi bản thân mối liên kết giữa 2 lớp chứa các thuộc tính riêng
   
-  -  Ví du: Khách hàng thuê xe đạp, lớp thuê chứa ngày bắt đầu thuê, ngày kết thúc,...
+  - Ví du: Khách hàng thuê xe đạp, lớp thuê chứa ngày bắt đầu thuê, ngày kết thúc,...
 
 <img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-07-11-03-32-image.png" title="" alt="" data-align="center">
 
@@ -730,8 +730,6 @@ class EBook : public Book {
 
 6. Không nên thêm các lớp `BorrowForm` và `LoanController` vào. Vì những lớp này không phải là lớp miền nghiệp vụ (domain class) -> lỗi Thiết kế sớm
 
-
-
 ## Bài 7: Xác định lớp và thuộc tính
 
 ### Biểu đồ lớp
@@ -783,7 +781,9 @@ class EBook : public Book {
 
 1. Tầm quan trọng của mô hình hóa cấu trúc hệ thống (Structural modeling)
 - **Định nghĩa cấu trúc:** Mô hình hóa cấu trúc giúp định nghĩa và thể hiện cách các đối tượng trong hệ thống được tổ chức và liên kết với nhau.
+
 - **Vai trò trung tâm:** Biểu đồ lớp (công cụ chính của mô hình hóa cấu trúc) được coi là trung tâm của toàn bộ quá trình phân tích và thiết kế hệ thống.
+
 - **Sự tiến triển:** Mô hình này không cố định mà được xây dựng, bồi đắp dần dần qua các giai đoạn phát triển, từ các lớp thực thể nghiệp vụ đến các lớp giao diện và điều khiển.
 2. Các bước chính để xây dựng biểu đồ lớp
 - Theo tài liệu, quy trình xây dựng biểu đồ lớp gồm 4 bước chính:
@@ -832,8 +832,6 @@ class EBook : public Book {
 - **Xây dựng lớp điều khiển:** Các lớp giao diện và lớp điều khiển trong biểu đồ lớp thường được xây dựng dựa trên nhu cầu thực hiện của từng ca sử dụng cụ thể.
 
 - **Phân bổ trách nhiệm:** Use case giúp xác định các hành vi cần thiết mà các lớp phải phối hợp thực hiện, từ đó giúp phân bổ trách nhiệm (operations) cho từng lớp một cách chính xác.
-
-
 
 ## Bài 8: Kỹ thuật CRC
 
@@ -896,6 +894,7 @@ class EBook : public Book {
 
 1. 
 - **Thẻ CRC là gì?** CRC là viết tắt của **C**lass (Lớp), **R**esponsibility (Trách nhiệm) và **C**ollaboration (Cộng tác). Đây là một công cụ đơn giản và trực quan dưới dạng các tờ bìa dùng để mô hình hóa các thành phần của lớp.
+
 - **Tại sao sử dụng trong OOAD?** Trong phân tích thiết kế hướng đối tượng (OOAD), các sơ đồ lớp ban đầu thường chỉ có tên lớp và thuộc tính mà thiếu các hoạt động (operations). Thẻ CRC được sử dụng để xác định các hoạt động này bằng cách phân tích trách nhiệm của lớp và cách chúng phối hợp với nhau. Nó giúp hiểu rõ vai trò của từng lớp trong hệ thống.
 2. **Các yếu tố nắm bắt:** Một thẻ CRC nắm bắt ba thành phần chính:
 - **Tên lớp (Class name):** Xác định thực thể đang được xem xét.
@@ -912,6 +911,8 @@ class EBook : public Book {
 
 - **Hạn chế:** Không mô tả được chi tiết **trình tự tương tác** (thứ tự trước sau) giữa các đối tượng.
 
-
-
 ## Bài 9: Các sơ đồ tương tác
+
+
+
+## Bài 10: Sơ đồ trạng thái
