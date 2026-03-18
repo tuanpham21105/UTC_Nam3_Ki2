@@ -1,0 +1,57 @@
+Lệnh thực hành DNS
+
+Vào chế độ root
+
+Cài đặt gói bind:
+	yum install bind -y
+
+Cấu hình DNS Server:
+
+	Cài đặt Network:
+		IPv4 để Manual
+		Cài đặt Address (Địa chỉ DNS server), Netmask, DNS (Địa chỉ DNS Server)
+
+	Cấu hình dịch vụ DNS:
+		gedit /etc/named.conf
+			Sửa:
+				listen-on port 53 { any; };
+				allow-query { any; };
+			Thêm tên miền:
+				zone "<tên miền>.<đuôi>" IN {
+					type master;
+					file "<tên miền>.<đuôi>";
+				};
+		Thêm tệp cơ sở dữ liệu:
+			Tạo file CSDL ở /var/named với tên <tên miền>.<đuôi>
+			Thêm nội dung:
+				$TTL 86400
+				@ IN SOA ns1.<tên miền>.<đuôi>. root.<tên miền>.<đuôi>. 
+					(
+					1
+					2
+					3
+					4
+					5
+					)
+					IN NS ns1.<tên miền>.<đuôi>.
+					IN MX 10 mail.<tên miền>.<đuôi>. (Cấu hình cho Mail service)
+					IN A <Địa chỉ của tên miền>
+				ns1	IN A <Địa chỉ của tên miền>
+				mail	IN A <Địa chỉ của tên miền> (Cấu hình cho Mail service)
+		Mở cổng tường lửa:
+			firewall-cmd --permanent --add-port=53/udp
+			firewall-cmd --permanent --add-port=53/tcp
+			firewall-cmd --reload
+			setenforce 0
+			
+	Chạy dịch vụ DNS:
+		systemctl start named
+		
+Cấu hình Client dùng DNS server:
+	Cài đặt Network:
+		IPv4 để Manual (Hoặc Automatic nếu có dịch vụ DHCP)
+		Cài đặt thủ công Address (Địa chỉ máy khách), Netmask, DNS (Địa chỉ DNS Server)
+
+Kiểm tra dịch vụ DNS:
+	nslookup
+		<Tên miền>.<Đuôi>

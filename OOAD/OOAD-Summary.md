@@ -913,6 +913,232 @@ class EBook : public Book {
 
 ## Bài 9: Các sơ đồ tương tác
 
+### Vai trò sơ đồ tương tác
 
+- Thẻ CRC chỉ cho thấy quan hệ và trách nhiệm giữa các lớp, ko thể hiện được trình tự tương tác cụ thể giữa các đối tượng. Sơ đồ tương tác được dùng để làm việc đó:
+
+- Vai trò:
+  
+  - **Mô tả sự tương tác:** Thể hiện cách các đối tượng hợp tác với nhau để hoàn thành một ca sử dụng (use case) thông qua việc trao đổi các thông điệp (messages).
+  
+  - **Vị trí trong mô hình hóa:** Thuộc trục mô hình hóa chức năng (Functional) và mô hình hóa động (Dynamic).
+  
+  - **Lợi ích:** Giúp kiểm tra lại việc phân công trách nhiệm cho các lớp và là đầu vào quan trọng cho bước xây dựng Biểu đồ lớp thiết kế (Design Class Diagram).
+
+### Các loại sơ đồ tương tác chính
+
+- 2 loại sơ đồ có **tác dụng tương đương** nhưng **nhấn mạnh khía cạnh khác nhau**:
+  
+  - **Sơ đồ trình tự (Sequence diagram):** Nhấn mạnh vào **trình tự thời gian** của các tương tác.
+  
+  - **Sơ đồ giao tiếp (Communication diagram):** Nhấn mạnh vào **cấu trúc cộng tác** giữa các đối tượng, phù hợp khi muốn làm rõ các kết nối phức tạp.
+
+### Sơ đồ trình tự (Sequence Diagram)
+
+- Các ký hiệu cơ bản:
+  
+  - **Tác nhân (Actor):** Người hoặc hệ thống bên ngoài tham gia vào tương tác.
+  
+  <img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-16-08-11-32-image.png" title="" alt="" data-align="center">
+  
+  - **Đối tượng/Lớp (Object/Class):** Thực thể (Lớp) tham gia gửi hoặc nhận thông điệp.
+  
+  <img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-16-08-11-47-image.png" title="" alt="" data-align="center">
+  
+  - **Đường sống (Lifeline):** Đường chấm dọc thể hiện sự tồn tại của đối tượng trong suốt quá trình tương tác.
+  
+  <img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-16-08-12-14-image.png" title="" alt="" data-align="center">
+  
+  - **Thanh kích hoạt (Activation bar):** Hình chữ nhật mỏng nằm trên lifeline cho biết khi đối tượng đang thực hiện một hành động.
+  
+  <img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-16-08-12-30-image.png" title="" alt="" data-align="center">
+  
+  - **Thông điệp (Message):** Mũi tên nét liền thể hiện lời gọi phương thức; mũi tên nét đứt (Return message) thể hiện kết quả trả về.
+  
+  <img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-16-08-13-06-image.png" title="" alt="" data-align="center">
+  
+  - **Hủy đối tượng (Object Destruction):** Dấu X ở cuối của **Đường sống** đánh dấu đối tượng đã được hủy.
+  
+  <img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-16-08-13-17-image.png" title="" alt="" data-align="center">
+
+- Ví dụ: Khách hàng đút thẻ vào cây ATM
+
+<img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-16-08-14-04-image.png" title="" alt="" data-align="center">
+
+- Các bước xây dựng sơ đồ trình tự:
+1. Xác định ngữ cảnh (thường là một kịch bản trong một use case cụ thể).
+
+2. Nhận diện các tác nhân và đối tượng tham gia.
+
+3. Thiết lập lifeline cho từng đối tượng.
+
+4. Viết các thông điệp tương tác và kết quả trả về dựa trên kịch bản.
+
+5. Thêm các thanh kích hoạt để làm rõ thời gian thực thi.
+
+### Mô hình lớp BCE (Boundary - Control - Entity)
+
+- Để tăng tính rõ ràng, giảm sự phụ thuộc (coupling) và tăng tính cố kết (cohesion), lớp được chia thành 3 loại:
+  
+  - **Lớp biên (Boundary class):** Giao tiếp với người dùng hoặc hệ thống bên ngoài (thường gắn với UI, biểu mẫu).
+  
+  - **Lớp điều khiển (Control class):** Điều phối logic và điều khiển luồng cho một use case cụ thể.
+  
+  - **Lớp thực thể (Entity class):** Lưu trữ dữ liệu nghiệp vụ lâu dài, thường ánh xạ với các bảng trong cơ sở dữ liệu.
+
+- Ví dụ: 
+  
+  - Lớp biên: BorrowBook
+  
+  - Lớp điều khiển: LoanController
+  
+  - Lớp thực thể: Copy, Loan
+  
+  <img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-16-15-43-00-image.png" title="" alt="" data-align="center">
+
+### Sơ đồ giao tiếp (Communication Diagram)
+
+- Đặc điểm và Ký hiệu:
+  
+  - **Đối tượng:** Được vẽ bằng hình chữ nhật.
+  
+  - **Thông điệp:** Là mũi tên nối giữa các đối tượng.
+  
+  - **Thứ tự thực hiện:** Được thể hiện bằng việc đánh số thứ tự trên nhãn thông điệp (ví dụ: 1, 1.1, 2...). Nhãn bao gồm "số thứ tự + tên hành động".
+  
+  - **Nhãn** = Số thứ tự + Hành động. Ví dụ: 1.2. Tính toán.
+
+- Ví dụ:
+
+<img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-16-16-12-12-image.png" title="" alt="" data-align="center">
+
+- Quy trình xây dựng sơ đồ giao tiếp:
+1. Xác định ngữ cảnh.
+
+2. Nhận diện tác nhân và đối tượng.
+
+3. Thêm các thông điệp tương tác.
+
+4. Đánh số các thông điệp để làm rõ trình tự.
+
+### Câu hỏi
+
+1. Có hai loại sơ đồ tương tác:
+- **Sơ đồ trình tự (Sequence diagram):**
+  
+  - **Tác dụng:** Nhấn mạnh vào **trình tự thời gian** của các tương tác giữa các đối tượng để hoàn thành một ca sử dụng.
+  - **Cách xây dựng:** Bao gồm 5 bước: (1) Xác định ngữ cảnh kịch bản; (2) Nhận diện tác nhân/đối tượng; (3) Thiết lập đường sống (lifeline); (4) Viết các thông điệp (message) tương tác; (5) Thêm thanh kích hoạt (activation bar).
+  - **Đặc điểm chính:** Sử dụng trục dọc làm thước đo thời gian, thể hiện rõ ràng luồng thông điệp từ trên xuống dưới.
+
+- **Sơ đồ giao tiếp (Communication diagram):**
+  
+  - **Tác dụng:** Nhấn mạnh vào **cấu trúc cộng tác** và mối quan hệ giữa các đối tượng.
+  - **Cách xây dựng:** Bao gồm 4 bước: (1) Xác định ngữ cảnh; (2) Nhận diện tác nhân/đối tượng; (3) Thêm thông điệp tương tác; (4) Đánh số thứ tự các thông điệp.
+2. **Tác dụng của sơ đồ trình tự:** Giúp trực quan hóa cách các đối tượng hợp tác thông qua việc trao đổi thông điệp để thực hiện kịch bản của ca sử dụng. Qua đó, người phân tích có thể kiểm tra lại việc phân công trách nhiệm cho các lớp và chuẩn bị dữ liệu cho bước xây dựng biểu đồ lớp thiết kế.
+
+3. **So sánh Sơ đồ trình tự và Sơ đồ trình tự hệ thống:**
+   
+   - **Sơ đồ trình tự hệ thống (System Sequence Diagram):** Coi hệ thống như một "hộp đen", chỉ tập trung vào sự tương tác giữa tác nhân bên ngoài và hệ thống (ví dụ: Actor và máy ATM).
+   
+   - **Sơ đồ trình tự (chi tiết):** Đi sâu vào bên trong hệ thống để mô tả sự tương tác giữa các đối tượng nội bộ (như các lớp Boundary, Control, Entity) để thực hiện yêu cầu của tác nhân.
+
+4. **So sánh Sơ đồ trình tự và Sơ đồ giao tiếp:**
+   
+   - Cả hai đều có tác dụng tương đương về mặt nội dung nhưng khác nhau về cách biểu diễn.
+   - **Ưu điểm của Sơ đồ trình tự:** Thể hiện rất rõ ràng trình tự thời gian và luồng xử lý của kịch bản.
+   - **Ưu điểm của Sơ đồ giao tiếp:** Giúp người xem dễ dàng nhận thấy mối quan hệ tổng thể và các kết nối phức tạp giữa nhiều đối tượng với nhau.
 
 ## Bài 10: Sơ đồ trạng thái
+
+### Vai trò sơ đồ trạng thái
+
+- Sơ đồ này dùng để mô tả ứng xử của các đối tượng trong một lớp cụ thể. Nó thể hiện các trạng thái (state) khác nhau mà đối tượng trải qua trong vòng đời của mình và những sự kiện (event) gây ra sự thay đổi giữa các trạng thái đó.
+
+### Ký hiệu của sơ đồ
+
+- **Trạng thái (State):** Thể hiện một tình huống hoặc điều kiện của đối tượng (ví dụ: tài khoản ngân hàng ở trạng thái "In credit" - còn tiền, hoặc "Overdrawn" - thấu chi).
+
+<img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-16-17-58-58-image.png" title="" alt="" data-align="center">
+
+- **Sự kiện (Event):** Tác nhân gây ra sự thay đổi trạng thái.
+
+<img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-16-17-59-16-image.png" title="" alt="" data-align="center">
+
+- **Chuyển tiếp (Transition):** Mũi tên chỉ hướng thay đổi từ trạng thái này sang trạng thái khác.
+
+<img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-16-17-59-30-image.png" title="" alt="" data-align="center">
+
+- **Các ký hiệu khác:**
+  
+  - **Start state:** Trạng thái khởi đầu (hình tròn đen đặc).
+  
+  <img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-16-17-59-43-image.png" title="" alt="" data-align="center">
+  
+  - **Stop state:** Trạng thái kết thúc (hình tròn có vòng bao ngoài).
+  
+  <img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-16-17-59-54-image.png" title="" alt="" data-align="center">
+  
+  - **Guard (Điều kiện):** Kiểm tra điều kiện trước khi chuyển trạng thái.
+  
+  - **Action (Hành động):** Xảy ra khi có sự chuyển tiếp.
+
+- Ví dụ:
+
+<img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-16-18-25-23-image.png" title="" alt="" data-align="center">
+
+### Một số loại trạng thái đặc biệt
+
+- **Trạng thái hành động (Activity state):** Mô tả một hoạt động đang diễn ra.
+
+<img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-16-18-26-25-image.png" title="" alt="" data-align="center">
+
+- **Trạng thái bên trong (Internal state):** Các xử lý diễn ra bên trong bản thân trạng thái đó.
+
+<img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-16-18-26-41-image.png" title="" alt="" data-align="center">
+
+- **Siêu trạng thái (Superstate):** Một trạng thái lớn bao hàm các trạng thái con bên trong nhằm đơn giản hóa sơ đồ khi có nhiều trạng thái chia sẻ chung các sự kiện chuyển tiếp.
+
+<img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-16-18-26-55-image.png" title="" alt="" data-align="center">
+
+### Quy trình xây dựng sơ đồ trạng thái
+
+1. **Xác định ngữ cảnh:** Xác định rõ đối tượng cụ thể nào cần được mô tả ứng xử.
+
+2. **Xác định trạng thái đầu và cuối:** Tìm điểm bắt đầu và kết thúc của vòng đời đối tượng.
+
+3. **Xác định thứ tự các trạng thái:** Sắp xếp các trạng thái theo trình tự logic.
+
+4. **Xác định sự kiện và điều kiện:** Tìm các tác nhân gây chuyển dịch và các ràng buộc đi kèm.
+
+5. **Vẽ biểu đồ:** Kết nối các thành phần lại thành sơ đồ hoàn chỉnh.
+
+### Câu hỏi
+
+1. Tác dụng của sơ đồ trạng thái:
+- Sơ đồ trạng thái dùng để mô tả **ứng xử của đối tượng** trong một lớp cụ thể.
+- Nó giúp thể hiện các **trạng thái (state)** khác nhau mà một đối tượng có thể trải qua trong vòng đời của mình và những **sự kiện (event)** gây ra sự thay đổi giữa các trạng thái đó.
+2. Không thể vẽ sơ đồ trạng thái cho cả hệ thống, bởi vì sơ đồ trạng thái được dùng để mô tả ứng xử của các đối tượng trong một lớp cụ thể. Nó thể hiện các trạng thái (state) khác nhau mà đối tượng trải qua trong vòng đời của mình và những sự kiện (event) gây ra sự thay đổi giữa các trạng thái đó.
+
+3. Các bước xây dựng sơ đồ trạng thái gồm:
+   
+   1. **Xác định ngữ cảnh:** Xác định rõ đối tượng cụ thể nào cần được mô tả ứng xử.
+   
+   2. **Xác định trạng thái đầu và cuối:** Tìm điểm bắt đầu và kết thúc của vòng đời đối tượng.
+   
+   3. **Xác định thứ tự các trạng thái:** Sắp xếp các trạng thái theo trình tự logic.
+   
+   4. **Xác định sự kiện và điều kiện:** Tìm các tác nhân gây chuyển dịch và các ràng buộc đi kèm.
+   
+   5. **Vẽ biểu đồ:** Kết nối các thành phần lại thành sơ đồ hoàn chỉnh.
+
+4. Sự khác nhau giữa trạng thái và sự kiện là:
+- **Trạng thái (State):** Là một tình huống hoặc điều kiện của đối tượng tại một thời điểm nhất định (ví dụ: tài khoản đang "In credit" hoặc "Overdrawn"). Trong sơ đồ, nó được biểu diễn bằng hình chữ nhật bo góc.
+- **Sự kiện (Event):** Là tác nhân, sự việc xảy ra gây ra sự thay đổi từ trạng thái này sang trạng thái khác (ví dụ: khách rút tiền, gửi tiền). Nó thường được ghi trên các đường mũi tên chuyển tiếp (transition).
+5. Siêu trạng thái xảy ra khi:
+- Siêu trạng thái (superstate) được sử dụng khi cần nhóm các trạng thái con có liên quan lại với nhau để đơn giản hóa sơ đồ (ví dụ: nhóm các bước "Nhập số điện thoại", "Chọn chế độ" và "Nhập tên" vào siêu trạng thái "Nhập chi tiết kết nối").
+- Ngoài ra, siêu trạng thái hữu ích khi có một sự kiện có thể xảy ra ở bất kỳ lúc nào trong nhiều trạng thái khác nhau (ví dụ: sự kiện "máy hỏng" hay "người dùng rút lui"), giúp tránh việc phải vẽ quá nhiều đường nối trùng lặp.
+6. Những hệ thống mà sơ đồ trạng thái sẽ hữu ích là những hệ thống có nhiều đối tượng, mỗi đối tượng trải qua nhiều trạng thái khác nhau trong suốt vòng đời của mình.
+
+
+
+## Bài 11: Thiết kế

@@ -1,0 +1,34 @@
+Lệnh thực hành WEB
+
+Cấu hình và chạy dịch vụ DNS Server
+
+Cài đặt gói httpd:
+	yum install httpd -y
+	
+Tạo file html cho website:
+	Tạo folder /var/www/<Tên miền>.<đuôi>:
+		mkdir /var/www/<Tên miền>.<đuôi>
+	Thêm file index.html vào thư mục trên
+	Thêm nội dung đơn giản vào index.html:
+		<html>
+			<h1 align=center style=color:red>Welcome to <Tên website>'s website!</h1>
+		</html>
+	
+Cấu hình website:
+	Chạy: gedit /etc/httpd/conf/httpd.conf
+	Thêm vào file:
+		<VirtualHost *>
+			DocumentRoot /var/www/<Tên miền>.<Đuôi>
+			ServerName <Tên miền>.<Đuôi>
+		</VirtualHost>
+		
+Mở cổng tường lửa:
+	firewall-cmd --permanent --add-port=80/tcp
+	firewall-cmd --reload
+	setenforce 0
+
+Chạy dịch vụ Web:
+	systemctl start httpd
+	
+Kiểm tra:
+	Mở trang web trên FireFox
