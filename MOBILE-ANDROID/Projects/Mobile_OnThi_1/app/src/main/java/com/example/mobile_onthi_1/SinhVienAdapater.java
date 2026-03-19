@@ -47,13 +47,13 @@ public class SinhVienAdapater extends BaseAdapter {
 
         if (view == null) {
             view = inflater.inflate(R.layout.sinh_vien_view, null);
-
-            TextView name = view.findViewById(R.id.name);
-            name.setText(data.get(position).ten);
-
-            TextView score = view.findViewById(R.id.score);
-            score.setText(String.valueOf(data.get(position).Sum()));
         }
+
+        TextView name = view.findViewById(R.id.name);
+        name.setText(data.get(position).ten);
+
+        TextView score = view.findViewById(R.id.score);
+        score.setText(String.valueOf(data.get(position).Sum()));
 
         return view;
     }

@@ -69,6 +69,7 @@
                 android:id="@+id/floatingActionButton"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
+                android:layout_gravity="bottom|start"
                 android:clickable="true"
                 android:translationX="70dp"
                 app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
@@ -77,6 +78,7 @@
                 android:id="@+id/floatingActionButton2"
                 android:layout_width="146dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
                 android:layout_margin="@dimen/cardview_default_radius"
                 android:layout_marginHorizontal="@dimen/cardview_default_radius"
                 android:clickable="true"

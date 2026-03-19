@@ -3,6 +3,7 @@ package com.example.mobile_;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +30,7 @@ public class Adapter extends BaseAdapter {
     public Adapter(Activity activity, ArrayList<User> data) {
         this.activity = activity;
         this.data = data;
-        dataBackup = data;
+        dataBackup = new ArrayList<>(data);
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -56,47 +57,47 @@ public class Adapter extends BaseAdapter {
 
         if (v == null) {
             v = inflater.inflate(R.layout.item, null);
-
-            ImageView image = v.findViewById(R.id.imageView);
-
-            TextView name = v.findViewById(R.id.editTextText);
-            name.setText(data.get(position).getName());
-
-            TextView phoneNumber = v.findViewById(R.id.editTextText2);
-            phoneNumber.setText(data.get(position).getPhonenumber());
-
-            ImageView image2 = v.findViewById(R.id.imageView2);
-            ImageView image3 = v.findViewById(R.id.imageView3);
-
-            image2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent in = new Intent(Intent.ACTION_DIAL,
-                            Uri.parse("tel: " + data.get(position).getPhonenumber()));
-
-                    activity.startActivity(in);
-                }
-            });
-
-            image3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent in = new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("sms: " + data.get(position).getPhonenumber()));
-
-                    activity.startActivity(in);
-                }
-            });
-
-            CheckBox checkBox = v.findViewById(R.id.checkBox);
-            checkBox.setChecked(false);
-            checkBox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    data.get(position).setCheck(!data.get(position).isCheck());
-                }
-            });
         }
+
+        ImageView image = v.findViewById(R.id.imageView);
+
+        TextView name = v.findViewById(R.id.editTextText);
+        name.setText(data.get(position).getName());
+
+        TextView phoneNumber = v.findViewById(R.id.editTextText2);
+        phoneNumber.setText(data.get(position).getPhonenumber());
+
+        ImageView image2 = v.findViewById(R.id.imageView2);
+        ImageView image3 = v.findViewById(R.id.imageView3);
+
+        image2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(Intent.ACTION_DIAL,
+                        Uri.parse("tel: " + data.get(position).getPhonenumber()));
+
+                activity.startActivity(in);
+            }
+        });
+
+        image3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("sms: " + data.get(position).getPhonenumber()));
+
+                activity.startActivity(in);
+            }
+        });
+
+        CheckBox checkBox = v.findViewById(R.id.checkBox);
+        checkBox.setChecked(false);
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                data.get(position).setCheck(!data.get(position).isCheck());
+            }
+        });
 
         return v;
     }
