@@ -1,0 +1,21 @@
+echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+firewall-cmd --zone=external --change-interface=ens33 --permanent
+firewall-cmd --zone=dmz --change-interface=ens35 --permanent
+firewall-cmd --zone=internal --change-interface=ens36 --permanent
+firewall-cmd --get-active-zones
+firewall-cmd --zone=dmz --add-service=http --permanent
+firewall-cmd --zone=internal --add-service=ssh --permanent
+firewall-cmd --zone=internal --add-service=http --permanent
+firewall-cmd --zone=internal --add-service=https --permanent
+firewall-cmd --zone=external --add-forward-port=port=80:proto=tcp:toaddr=192.168.100.10 --permanent
+firewall-cmd --get-default-zone
+
+firewall-cmd --zone=external --add-masquerade --permanent
+
+firewall-cmd --permanent --new-policy blockDmzToInternal
+firewall-cmd --permanent --policy blockDmzToInternal --add-ingress-zone dmz
+firewall-cmd --permanent --policy blockDmzToInternal --add-egress-zone internal
+firewall-cmd --permanent --policy blockDmzToInternal --set-target REJECT
+firewall-cmd --reload
+
+firewall-cmd --zone=external --remove-forward-port=port=80:proto=tcp:toaddr=192.168.100.10 --permanent 

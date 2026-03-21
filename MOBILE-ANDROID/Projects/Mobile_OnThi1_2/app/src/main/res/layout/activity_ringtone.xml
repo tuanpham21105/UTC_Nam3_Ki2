@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:title="Play the ringtone"
+        app:titleTextColor="@android:color/white" />
+
+    <!-- Content Area -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp">
+
+        <!-- Play Button -->
+        <Button
+            android:id="@+id/playButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Play"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Stop Button -->
+        <Button
+            android:id="@+id/stopButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Stop"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="16dp"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+
+</LinearLayout>
