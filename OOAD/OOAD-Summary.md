@@ -24,7 +24,7 @@
     
     - Sequence Diagram: luồng tương tác đối tượng
     
-    - State Machine Diagram: vòng đời của một đối tượng
+    - tState Machine Diagram: vòng đời của một đối tượng
 
 - Các sơ đồ dùng trong các góc nhìn (view) khác nhau, có 5 view, mỗi view mô tả 1 khía cạnh của hệ thống
   
@@ -1138,7 +1138,5 @@ class EBook : public Book {
 - Siêu trạng thái (superstate) được sử dụng khi cần nhóm các trạng thái con có liên quan lại với nhau để đơn giản hóa sơ đồ (ví dụ: nhóm các bước "Nhập số điện thoại", "Chọn chế độ" và "Nhập tên" vào siêu trạng thái "Nhập chi tiết kết nối").
 - Ngoài ra, siêu trạng thái hữu ích khi có một sự kiện có thể xảy ra ở bất kỳ lúc nào trong nhiều trạng thái khác nhau (ví dụ: sự kiện "máy hỏng" hay "người dùng rút lui"), giúp tránh việc phải vẽ quá nhiều đường nối trùng lặp.
 6. Những hệ thống mà sơ đồ trạng thái sẽ hữu ích là những hệ thống có nhiều đối tượng, mỗi đối tượng trải qua nhiều trạng thái khác nhau trong suốt vòng đời của mình.
-
-
 
 ## Bài 11: Thiết kế

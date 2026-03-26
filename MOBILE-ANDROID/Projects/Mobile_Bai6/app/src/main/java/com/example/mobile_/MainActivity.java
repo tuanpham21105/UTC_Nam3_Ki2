@@ -1,8 +1,10 @@
 package com.example.mobile_;
 
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -11,13 +13,19 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -26,6 +34,8 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
     private ListView lvContact;
@@ -44,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private ConnectivityManager.NetworkCallback networkCallback;
     private BroadcastReceiver airplaneModeReceiver;
 
+    int selectedid = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +70,13 @@ public class MainActivity extends AppCompatActivity {
         lvContact = findViewById(R.id.lvContact);
         listUser = new ArrayList<>();
         listUser.add(
-            new User("", "123456789", "Nam", 1)
+            new User("", "123456789", "Nam", 0)
         );
         listUser.add(
-                new User("", "123456789", "HO VIET TUNG", 2)
+                new User("", "123456789", "HO VIET TUNG", 1)
         );
         listUser.add(
-                new User("", "123456789", "TRAN TIEN SON BEO", 3)
+                new User("", "123456789", "TRAN TIEN SON BEO", 2)
         );
 
         listUserAdapter = new Adapter(this, listUser);
@@ -85,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        registerForContextMenu(lvContact);
 
         initNetworkCallback();
         initAirPlaneCallback();
@@ -156,5 +169,114 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(airplaneModeReceiver, filter);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = new MenuInflater(this);
+        getMenuInflater().inflate(R.menu.new_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_item_sort) {
+            Toast.makeText(MainActivity.this, "Sort", Toast.LENGTH_LONG);
+            Collections.sort(listUser, (u1, u2) -> {
+                return u1.getName().toLowerCase().trim().compareToIgnoreCase(u2.getName().toLowerCase());
+            });
+            listUserAdapter.notifyDataSetChanged();
+            lvContact.setAdapter(listUserAdapter);
+
+        }
+        else if (item.getItemId() == R.id.menu_item_add) {
+            Intent intent = new Intent(MainActivity.this, AddUser.class);
+            startActivityForResult(intent, 100);
+        }
+
+//        switch (item.getItemId()) {
+//            case R.id.menu_item_sort:
+//                break;
+//            case R.id.menu_item_add:
+//                break;
+//        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 400) {
+            return;
+        }
+
+        Bundle bundle = data.getExtras();
+        int id = bundle.getInt("Id");
+        String name = bundle.getString("Name");
+        String phone = bundle.getString("Phone");
+        if (requestCode == 100 && resultCode == 200) {
+            listUser.add(new User("", phone, name, id));
+        }
+        else if (requestCode == 200 && resultCode == 201) {
+            listUser.set(id, new User("", bundle.getString("Phone"), bundle.getString("Name"), id));
+        }
+
+        listUserAdapter.notifyDataSetChanged();
+        lvContact.setAdapter(listUserAdapter);
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.context_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        final AdapterView.AdapterContextMenuInfo info;
+
+        User c = listUser.get(selectedid);
+
+        selectedid = -1;
+
+
+        if (item.getItemId() == R.id.cm_edit) {
+            Intent intent = new Intent(this, AddUser.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("Id", c.getId());
+            bundle.putString("Name", c.getName());
+            bundle.putString("Phone", c.getPhonenumber());
+            intent.putExtras(bundle);
+            setResult(201, intent);
+            finish();
+        }
+        else if (item.getItemId() == R.id.cm_call) {
+
+        }
+        else if (item.getItemId() == R.id.cm_delete) {
+            new AlertDialog.Builder(this).setTitle("Delete?")
+                    .setMessage("Are you sure?")
+                    .setPositiveButton("Yes",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    listUser.remove(selectedid);
+                                    listUserAdapter.notifyDataSetChanged();
+                                    lvContact.setAdapter(listUserAdapter);
+                                    dialog.dismiss();
+                                }
+                            }
+                    )
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    })
+                    .create().show();
+        }
+
+        return super.onContextItemSelected(item);
+    }
 }
