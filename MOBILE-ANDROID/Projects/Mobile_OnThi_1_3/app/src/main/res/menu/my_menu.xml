@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/sum1"
+        android:title="Tinh tong tien ve khu hoi" />
+    <item
+        android:id="@+id/sum2"
+        android:title="Tinh tong tien ve mot chieu" />
+</menu>
