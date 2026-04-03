@@ -11,6 +11,14 @@ public class User {
         check = false;
     }
 
+    public User(String imgUrl, String phonenumber, String name, int id, int check) {
+        this.imgUrl = imgUrl;
+        this.phonenumber = phonenumber;
+        this.name = name;
+        this.id = id;
+        this.check = check == 1 ? true : false;
+    }
+
     private String name;
     private String phonenumber;
     private String imgUrl;

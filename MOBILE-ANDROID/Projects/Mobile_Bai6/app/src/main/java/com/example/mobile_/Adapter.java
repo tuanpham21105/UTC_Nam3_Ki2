@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +23,7 @@ public class Adapter extends BaseAdapter {
     private ArrayList<User> data;
 
     private LayoutInflater inflater;
-    private ArrayList<User> dataBackup;
+    public ArrayList<User> dataBackup;
 
     private FloatingActionButton addBtn;
 
@@ -101,4 +102,43 @@ public class Adapter extends BaseAdapter {
         return v;
     }
 
+    public Filter getFilter() {
+        Filter f = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults fr = new FilterResults();
+
+                if (dataBackup == null) {
+                    dataBackup = new ArrayList<>(data);
+                }
+
+                if (constraint == null || constraint.length() == 0) {
+                    fr.count = dataBackup.size();
+                    fr.values = dataBackup;
+                }
+                else {
+                    ArrayList<User> newdata = new ArrayList<>();
+                    for (User u : dataBackup)
+                        if (u.getName().toLowerCase().contains(
+                                constraint.toString().toLowerCase()))
+                            newdata.add(u);
+                    fr.count = newdata.size();
+                    fr.values = newdata;
+                }
+
+                return fr;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                data = new ArrayList<User>();
+                ArrayList<User> tmp = (ArrayList<User>) results.values;
+                for (User u : tmp)
+                    data.add(u);
+                notifyDataSetChanged();
+            }
+        };
+
+        return f;
+    }
 }

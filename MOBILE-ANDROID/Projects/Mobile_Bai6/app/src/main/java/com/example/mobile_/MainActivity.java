@@ -1,7 +1,6 @@
 package com.example.mobile_;
 
 import android.app.AlertDialog;
-import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,6 +12,8 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -34,7 +36,6 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,8 +54,10 @@ public class MainActivity extends AppCompatActivity {
     private ConnectivityManager connectivityManager;
     private ConnectivityManager.NetworkCallback networkCallback;
     private BroadcastReceiver airplaneModeReceiver;
+    int selectedid;
+    MyDB myDB;
 
-    int selectedid = -1;
+    EditText searchET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,16 +71,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
         lvContact = findViewById(R.id.lvContact);
-        listUser = new ArrayList<>();
-        listUser.add(
+        myDB = new MyDB(this, "ContactDb", null, 1);
+        myDB.addContact(
             new User("", "123456789", "Nam", 0)
         );
-        listUser.add(
+        myDB.addContact(
                 new User("", "123456789", "HO VIET TUNG", 1)
         );
-        listUser.add(
+        myDB.addContact(
                 new User("", "123456789", "TRAN TIEN SON BEO", 2)
         );
+
+        listUser = myDB.getAllContact();
 
         listUserAdapter = new Adapter(this, listUser);
 
@@ -90,10 +95,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 for (int i = listUser.size() - 1; i >= 0; i--) {
                     if (listUser.get(i).isCheck()) {
+                        myDB.deleteContact(listUser.get(i).getId());
                         listUser.remove(listUser.get(i));
-                        listUserAdapter.notifyDataSetChanged();
                     }
                 }
+                listUserAdapter.dataBackup = new ArrayList<>(myDB.getAllContact());
+                listUserAdapter.notifyDataSetChanged();
             }
         });
 
@@ -101,6 +108,26 @@ public class MainActivity extends AppCompatActivity {
 
         initNetworkCallback();
         initAirPlaneCallback();
+
+        searchET = findViewById(R.id.searchEditText);
+
+        searchET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                listUserAdapter.getFilter().filter(s.toString());
+                listUserAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     private void initNetworkCallback() {
@@ -214,9 +241,15 @@ public class MainActivity extends AppCompatActivity {
         String phone = bundle.getString("Phone");
         if (requestCode == 100 && resultCode == 200) {
             listUser.add(new User("", phone, name, id));
+            myDB.addContact(new User("", phone, name, id));
+            listUserAdapter.dataBackup = new ArrayList<>(myDB.getAllContact());
+            listUserAdapter.notifyDataSetChanged();
         }
         else if (requestCode == 200 && resultCode == 201) {
             listUser.set(id, new User("", bundle.getString("Phone"), bundle.getString("Name"), id));
+            myDB.updateContact(id, new User("", bundle.getString("Phone"), bundle.getString("Name"), id));
+            listUserAdapter.dataBackup = new ArrayList<>(myDB.getAllContact());
+            listUserAdapter.notifyDataSetChanged();
         }
 
         listUserAdapter.notifyDataSetChanged();
@@ -240,7 +273,6 @@ public class MainActivity extends AppCompatActivity {
 
         selectedid = -1;
 
-
         if (item.getItemId() == R.id.cm_edit) {
             Intent intent = new Intent(this, AddUser.class);
             Bundle bundle = new Bundle();
@@ -249,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
             bundle.putString("Phone", c.getPhonenumber());
             intent.putExtras(bundle);
             setResult(201, intent);
-            finish();
+            startActivityForResult(intent, 200);
         }
         else if (item.getItemId() == R.id.cm_call) {
 
@@ -261,9 +293,11 @@ public class MainActivity extends AppCompatActivity {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    listUser.remove(selectedid);
-                                    listUserAdapter.notifyDataSetChanged();
+                                    myDB.deleteContact(c.getId());
+                                    listUser.remove(c.getId());
                                     lvContact.setAdapter(listUserAdapter);
+                                    listUserAdapter.dataBackup = myDB.getAllContact();
+                                    listUserAdapter.notifyDataSetChanged();
                                     dialog.dismiss();
                                 }
                             }
