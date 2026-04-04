@@ -4,10 +4,15 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63afb98c-b01c-45ab-990d-18803adaddc7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../AT-BMTT/slides/slide_c4_ma_khoi_hien_dai_DES.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile_Bai6.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../OOAD/OOAD-Summary.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../OOAD/OOAD-Summary.md" afterDir="false" />
+    <list default="true" id="726a9809-729f-44ec-959b-07e6977f09e4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/AndroidProjectSystem.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/migrations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile_Bai6/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile_Bai6/.idea/misc.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,11 +22,14 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
   <component name="ProjectColorInfo"><![CDATA[{
   "customColor": "",
-  "associatedIndex": 1
+  "associatedIndex": 5
 }]]></component>
-  <component name="ProjectId" id="3B4Dd9iAj5C9n0JcU9684WeQHbc" />
+  <component name="ProjectId" id="3BsElrlzVkeJL0L4qU1v5thDVFd" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -35,17 +43,19 @@
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/tuan-pham/Documents/UTC_Nam3_Ki2/MOBILE-ANDROID/Projects/Mobile_OnThi_1"
+    "last_opened_file_path": "/home/tuan-pham/Documents/UTC_Nam3_Ki2/MOBILE-ANDROID/Projects/Mobile_Lab_4",
+    "settings.editor.selected.configurable": "AndroidSdkUpdater"
   }
 }]]></component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="63afb98c-b01c-45ab-990d-18803adaddc7" name="Changes" comment="" />
-      <created>1773739535499</created>
+      <changelist id="726a9809-729f-44ec-959b-07e6977f09e4" name="Changes" comment="" />
+      <created>1775269532904</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1773739535499</updated>
+      <updated>1775269532904</updated>
     </task>
     <servers />
   </component>
