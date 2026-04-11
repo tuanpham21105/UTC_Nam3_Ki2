@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý sản phẩm</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        h2 {
+            margin-top: 30px;
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background: white;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background: #eee;
+        }
+        .form-box {
+            background: white;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        button {
+            cursor: pointer;
+        }
+        .btn-delete {
+            background: red;
+            color: white;
+        }
+        .btn-edit {
+            background: orange;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Quản lý sản phẩm</h1>
+
+<!-- SEARCH -->
+<div class="form-box">
+    <h2>Tìm kiếm</h2>
+    <input type="text" id="keyword" placeholder="Nhập tên SP hoặc chất liệu">
+    <button onclick="search()">Tìm</button>
+</div>
+
+<!-- FORM -->
+<div class="form-box">
+    <h2>Thêm / Sửa sản phẩm</h2>
+    <input id="MaSP" placeholder="Mã SP">
+    <input id="TenSP" placeholder="Tên SP">
+    <input id="MaCL" placeholder="Mã CL">
+    <input id="MoTa" placeholder="Mô tả">
+    <input id="GiaNhap" type="number" placeholder="Giá nhập">
+    <input id="GiaBan" type="number" placeholder="Giá bán">
+    <input id="SoLuong" type="number" placeholder="Số lượng">
+
+    <br>
+    <button onclick="addProduct()">Thêm</button>
+    <button onclick="updateProduct()">Sửa</button>
+</div>
+
+<!-- TABLE -->
+<h2>Danh sách tồn kho</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Mã</th>
+            <th>Tên</th>
+            <th>Chất liệu</th>
+            <th>Mô tả</th>
+            <th>Giá nhập</th>
+            <th>Giá bán</th>
+            <th>Số lượng</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+</table>
+
+<script>
+const API = "http://localhost:8080";
+
+/* LOAD ALL */
+function loadAll() {
+    fetch(API + "/sp/getall")
+    .then(res => res.json())
+    .then(data => render(data));
+}
+
+/* SEARCH */
+function search() {
+    let keyword = document.getElementById("keyword").value;
+    fetch(API + "/sp/getbyname?keyword=" + encodeURIComponent(keyword))
+    .then(res => res.json())
+    .then(data => render(data));
+}
+
+/* LOAD ALL */
+function loadLeft() {
+    fetch(API + "/sp/getleft")
+    .then(res => res.json())
+    .then(data => render(data));
+}
+
+/* RENDER TABLE */
+function render(data) {
+    let html = "";
+    data.forEach(sp => {
+        html += `
+        <tr>
+            <td>${sp.MaSP}</td>
+            <td>${sp.TenSP}</td>
+            <td>${sp.MaCL}</td>
+            <td>${sp.MoTa}</td>
+            <td>${sp.GiaNhap}</td>
+            <td>${sp.GiaBan}</td>
+            <td>${sp.SoLuong}</td>
+            <td>
+                <button class="btn-edit" onclick='fillForm(${JSON.stringify(sp)})'>Sửa</button>
+                <button class="btn-delete" onclick="deleteProduct('${sp.MaSP}')">Xóa</button>
+            </td>
+        </tr>
+        `;
+    });
+    document.getElementById("tableBody").innerHTML = html;
+}
+
+/* FILL FORM */
+function fillForm(sp) {
+    document.getElementById("MaSP").value = sp.MaSP;
+    document.getElementById("TenSP").value = sp.TenSP;
+    document.getElementById("MaCL").value = sp.MaCL;
+    document.getElementById("MoTa").value = sp.MoTa;
+    document.getElementById("GiaNhap").value = sp.GiaNhap;
+    document.getElementById("GiaBan").value = sp.GiaBan;
+    document.getElementById("SoLuong").value = sp.SoLuong;
+}
+
+/* GET DATA FROM FORM */
+function getFormData() {
+    return {
+        MaSP: document.getElementById("MaSP").value,
+        TenSP: document.getElementById("TenSP").value,
+        MaCL: document.getElementById("MaCL").value,
+        MoTa: document.getElementById("MoTa").value,
+        GiaNhap: parseFloat(document.getElementById("GiaNhap").value),
+        GiaBan: parseFloat(document.getElementById("GiaBan").value),
+        SoLuong: parseInt(document.getElementById("SoLuong").value)
+    };
+}
+
+/* ADD */
+function addProduct() {
+    fetch(API + "/sp/add", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(getFormData())
+    })
+    .then(res => res.text())
+    .then(() => loadAll());
+}
+
+/* UPDATE */
+function updateProduct() {
+    fetch(API + "/sp/update/" + getFormData().MaSP, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(getFormData())
+    })
+    .then(res => res.text())
+    .then(() => loadAll());
+}
+
+/* DELETE */
+function deleteProduct(id) {
+    fetch(API + "/sp/delete/" + id, {
+        method: "DELETE"
+    })
+    .then(res => res.text())
+    .then(() => loadAll());
+}
+
+/* INIT */
+loadAll();
+</script>
+
+</body>
+</html>
