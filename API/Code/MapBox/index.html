@@ -77,6 +77,29 @@ body { margin: 0; padding: 0; }
         geolocate.trigger();
     });
 
+    // Add markers to the map
+    const markers = [
+        { lng: -74.5, lat: 40, title: 'New York' },
+        { lng: 2.3522, lat: 48.8566, title: 'Paris' },
+        { lng: 13.405, lat: 52.52, title: 'Berlin' },
+        { lng: -3.7038, lat: 40.4168, title: 'Madrid' }
+    ];
+
+    markers.forEach((markerData) => {
+        const el = document.createElement('div');
+        el.className = 'marker';
+        el.style.backgroundImage = 'url(https://docs.mapbox.com/mapbox-gl-js/assets/icon.png)';
+        el.style.width = '32px';
+        el.style.height = '32px';
+        el.style.backgroundSize = '100%';
+        el.style.cursor = 'pointer';
+
+        new mapboxgl.Marker(el)
+            .setLngLat([markerData.lng, markerData.lat])
+            .setPopup(new mapboxgl.Popup().setText(markerData.title))
+            .addTo(map);
+    });
+
     document.getElementById('buttons').addEventListener('click', (event) => {
         const language = event.target.id.substr('button-'.length);
         // Use setLayoutProperty to set the value of a layout property in a style layer.

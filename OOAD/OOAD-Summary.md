@@ -408,7 +408,7 @@ class EBook : public Book {
 
 3. Chức năng được coi là 1 ca sử dụng khi:
    
-   - Thể hiện **góc nhìn từ bên ngoài**của người dùng về chức năng mà hệ thống cần thực hiện
+   - Thể hiện **góc nhìn từ bên ngoài** của người dùng về chức năng mà hệ thống cần thực hiện
    
    - Mỗi ca sử dụng thể hiện **một nhiệm vụ chính** hoặc **một nhóm các chức năng chính**
    
@@ -688,13 +688,13 @@ class EBook : public Book {
 
 1. Sự khác nhau giữa đối tượng và lớp:
    
-   - **Lớp:** Là một định nghĩa trừu tượng, đóng vai trò như một khuôn mẫu hoặc bản thiết kế cho các đối tượng có cùng đặc tính chung. Lớp giúp thực hiện trừu tượng hóa dữ liệu, bao gói và che giấu thông tin.
+   - **Lớp:** Là một định nghĩa trừu tượng của các đối tượng có cùng những đặc tính chung.
      
      - Ký hiệu: Thể hiện bằng hình chữ nhật chia làm 3 phần: Tên lớp (trên cùng), Các thuộc tính (giữa) và Các thao tác/phương thức (dưới cùng).
        
        <img src="file:///home/tuan-pham/snap/marktext/9/.config/marktext/images/2026-03-07-11-19-59-image.png" title="" alt="" data-align="center">
    
-   - **Đối tượng:** Là một thực thể cụ thể (instance) được tạo ra từ một lớp. Thế giới thực bao gồm các đối tượng vật lý (xe tải, sinh viên), đối tượng khái niệm (quy trình) hoặc đối tượng phần mềm.
+   - **Đối tượng:** Là một thể hiện cụ thể của một lớp.
      
      - Ký hiệu: Thể hiện bằng hình chữ nhật gồm tên đối tượng và tên lớp (thường gạch chân), theo sau là các giá trị thuộc tính cụ thể (ví dụ: `ann :Customer`)
        
@@ -777,7 +777,7 @@ class EBook : public Book {
 
 - Thuộc tính được xác định qua các danh từ chỉ giá trị (không đủ độc lập để làm lớp) và là các thành phần thuộc về lớp mà nó mô tả.
 
-#### Câu hỏi
+### Câu hỏi
 
 1. Tầm quan trọng của mô hình hóa cấu trúc hệ thống (Structural modeling)
 - **Định nghĩa cấu trúc:** Mô hình hóa cấu trúc giúp định nghĩa và thể hiện cách các đối tượng trong hệ thống được tổ chức và liên kết với nhau.
@@ -893,16 +893,24 @@ class EBook : public Book {
 ### Câu hỏi
 
 1. 
-- **Thẻ CRC là gì?** CRC là viết tắt của **C**lass (Lớp), **R**esponsibility (Trách nhiệm) và **C**ollaboration (Cộng tác). Đây là một công cụ đơn giản và trực quan dưới dạng các tờ bìa dùng để mô hình hóa các thành phần của lớp.
+- **Thẻ CRC là gì?** CRC là viết tắt của **C**lass (Lớp), **R**esponsibility (Trách nhiệm) và **C**ollaboration (Cộng tác), dùng để mô hình hóa các thành phần của lớp.
 
-- **Tại sao sử dụng trong OOAD?** Trong phân tích thiết kế hướng đối tượng (OOAD), các sơ đồ lớp ban đầu thường chỉ có tên lớp và thuộc tính mà thiếu các hoạt động (operations). Thẻ CRC được sử dụng để xác định các hoạt động này bằng cách phân tích trách nhiệm của lớp và cách chúng phối hợp với nhau. Nó giúp hiểu rõ vai trò của từng lớp trong hệ thống.
+- **Tại sao sử dụng trong OOAD?** 
+  
+  - Là công cụ đơn giản, trực quan
+  
+  - Xác định trách nhiệm của lớp
+  
+  - Phân tích trách nhiệm rõ ràng giữa các lớp
+  
+  - Brainstorming trong phân tích, thảo luận nhóm
 2. **Các yếu tố nắm bắt:** Một thẻ CRC nắm bắt ba thành phần chính:
 - **Tên lớp (Class name):** Xác định thực thể đang được xem xét.
 
 - **Trách nhiệm (Responsibility):** Các nhiệm vụ, chức năng hoặc thông tin mà lớp đó phải thực hiện hoặc nắm giữ.
 
 - **Cộng tác (Collaboration):** Danh sách các lớp khác mà lớp hiện tại cần tương tác để hoàn thành trách nhiệm của mình.
-3. **Số lượng trách nhiệm:** Tài liệu quy định sử dụng thẻ có kích thước giới hạn (**10x15 cm**). Việc giới hạn kích thước này nhằm mục đích buộc người phân tích phải giữ cho lớp đơn giản, tập trung vào các trách nhiệm cốt lõi và không để lớp trở nên quá phức tạp
+3. **Số lượng trách nhiệm:** Phụ thuộc vào giới hạn kích thước thẻ, buộc phải chọn ra những trách nhiệm quan trọng nhất.
 
 4. Kỹ thuật CRC rất phù hợp và thường được sử dụng cho việc thảo luận nhóm hoặc động não (brainstorming) trong giai đoạn phân tích.
 
@@ -1026,25 +1034,26 @@ class EBook : public Book {
 1. Có hai loại sơ đồ tương tác:
 - **Sơ đồ trình tự (Sequence diagram):**
   
-  - **Tác dụng:** Nhấn mạnh vào **trình tự thời gian** của các tương tác giữa các đối tượng để hoàn thành một ca sử dụng.
+  - **Tác dụng:** Mô tả trình tự tương tác theo thời gian của các đối tượng
   - **Cách xây dựng:** Bao gồm 5 bước: (1) Xác định ngữ cảnh kịch bản; (2) Nhận diện tác nhân/đối tượng; (3) Thiết lập đường sống (lifeline); (4) Viết các thông điệp (message) tương tác; (5) Thêm thanh kích hoạt (activation bar).
-  - **Đặc điểm chính:** Sử dụng trục dọc làm thước đo thời gian, thể hiện rõ ràng luồng thông điệp từ trên xuống dưới.
+  - **Đặc điểm chính:** Nhấn mạnh trình tự thời gian.
 
 - **Sơ đồ giao tiếp (Communication diagram):**
   
-  - **Tác dụng:** Nhấn mạnh vào **cấu trúc cộng tác** và mối quan hệ giữa các đối tượng.
+  - **Tác dụng:** Mô tả cấu trúc cộng tác giữa các đối tượng.
   - **Cách xây dựng:** Bao gồm 4 bước: (1) Xác định ngữ cảnh; (2) Nhận diện tác nhân/đối tượng; (3) Thêm thông điệp tương tác; (4) Đánh số thứ tự các thông điệp.
-2. **Tác dụng của sơ đồ trình tự:** Giúp trực quan hóa cách các đối tượng hợp tác thông qua việc trao đổi thông điệp để thực hiện kịch bản của ca sử dụng. Qua đó, người phân tích có thể kiểm tra lại việc phân công trách nhiệm cho các lớp và chuẩn bị dữ liệu cho bước xây dựng biểu đồ lớp thiết kế.
+  - **Đặc điểm:** Nhấn mạnh cấu trúc cộng tác giữa các đối tượng.
+2. **Tác dụng của sơ đồ trình tự:** Mô tả trực quan trình tự tương tác theo thời gian của các đối tượng.
 
 3. **So sánh Sơ đồ trình tự và Sơ đồ trình tự hệ thống:**
    
-   - **Sơ đồ trình tự hệ thống (System Sequence Diagram):** Coi hệ thống như một "hộp đen", chỉ tập trung vào sự tương tác giữa tác nhân bên ngoài và hệ thống (ví dụ: Actor và máy ATM).
+   - **Sơ đồ trình tự hệ thống (System Sequence Diagram):** tập trung vào sự tương tác giữa tác nhân bên ngoài và hệ thống (ví dụ: Actor và máy ATM).
    
-   - **Sơ đồ trình tự (chi tiết):** Đi sâu vào bên trong hệ thống để mô tả sự tương tác giữa các đối tượng nội bộ (như các lớp Boundary, Control, Entity) để thực hiện yêu cầu của tác nhân.
+   - **Sơ đồ trình tự (chi tiết):** mô tả sự tương tác giữa các đối tượng nội bộ (như các lớp Boundary, Control, Entity) để thực hiện yêu cầu của tác nhân.
 
 4. **So sánh Sơ đồ trình tự và Sơ đồ giao tiếp:**
    
-   - Cả hai đều có tác dụng tương đương về mặt nội dung nhưng khác nhau về cách biểu diễn.
+   - Sơ đồ trình tự nhấn mạnh trình tự thời gian, sơ đồ tương giao tiếp nhấn mạnh cấu trúc cộng tác giữa các đối tượng
    - **Ưu điểm của Sơ đồ trình tự:** Thể hiện rất rõ ràng trình tự thời gian và luồng xử lý của kịch bản.
    - **Ưu điểm của Sơ đồ giao tiếp:** Giúp người xem dễ dàng nhận thấy mối quan hệ tổng thể và các kết nối phức tạp giữa nhiều đối tượng với nhau.
 
@@ -1116,8 +1125,8 @@ class EBook : public Book {
 
 1. Tác dụng của sơ đồ trạng thái:
 - Sơ đồ trạng thái dùng để mô tả **ứng xử của đối tượng** trong một lớp cụ thể.
-- Nó giúp thể hiện các **trạng thái (state)** khác nhau mà một đối tượng có thể trải qua trong vòng đời của mình và những **sự kiện (event)** gây ra sự thay đổi giữa các trạng thái đó.
-2. Không thể vẽ sơ đồ trạng thái cho cả hệ thống, bởi vì sơ đồ trạng thái được dùng để mô tả ứng xử của các đối tượng trong một lớp cụ thể. Nó thể hiện các trạng thái (state) khác nhau mà đối tượng trải qua trong vòng đời của mình và những sự kiện (event) gây ra sự thay đổi giữa các trạng thái đó.
+- Nó giúp thể hiện các **trạng thái (state)** khác nhau của đối tượng và những **sự kiện (event)** gây ra sự thay đổi giữa các trạng thái đó.
+2. Không thể vẽ sơ đồ trạng thái cho cả hệ thống, bởi vì sơ đồ trạng thái được dùng để mô tả ứng xử của các đối tượng trong một lớp cụ thể.
 
 3. Các bước xây dựng sơ đồ trạng thái gồm:
    
@@ -1132,11 +1141,39 @@ class EBook : public Book {
    5. **Vẽ biểu đồ:** Kết nối các thành phần lại thành sơ đồ hoàn chỉnh.
 
 4. Sự khác nhau giữa trạng thái và sự kiện là:
-- **Trạng thái (State):** Là một tình huống hoặc điều kiện của đối tượng tại một thời điểm nhất định (ví dụ: tài khoản đang "In credit" hoặc "Overdrawn"). Trong sơ đồ, nó được biểu diễn bằng hình chữ nhật bo góc.
-- **Sự kiện (Event):** Là tác nhân, sự việc xảy ra gây ra sự thay đổi từ trạng thái này sang trạng thái khác (ví dụ: khách rút tiền, gửi tiền). Nó thường được ghi trên các đường mũi tên chuyển tiếp (transition).
+- **Trạng thái (State):** Là giá trị hiện tại của các thuộc tính của đối tượng.
+- **Sự kiện (Event):** Là tác nhân, sự việc xảy ra gây ra sự thay đổi từ trạng thái này sang trạng thái khác.
 5. Siêu trạng thái xảy ra khi:
-- Siêu trạng thái (superstate) được sử dụng khi cần nhóm các trạng thái con có liên quan lại với nhau để đơn giản hóa sơ đồ (ví dụ: nhóm các bước "Nhập số điện thoại", "Chọn chế độ" và "Nhập tên" vào siêu trạng thái "Nhập chi tiết kết nối").
-- Ngoài ra, siêu trạng thái hữu ích khi có một sự kiện có thể xảy ra ở bất kỳ lúc nào trong nhiều trạng thái khác nhau (ví dụ: sự kiện "máy hỏng" hay "người dùng rút lui"), giúp tránh việc phải vẽ quá nhiều đường nối trùng lặp.
+- Siêu trạng thái (superstate) được sử dụng khi cần nhóm các trạng thái con có liên quan lại với nhau.
+- Có một sự kiện có thể xảy ra ở bất kỳ lúc nào trong nhiều trạng thái khác nhau.
 6. Những hệ thống mà sơ đồ trạng thái sẽ hữu ích là những hệ thống có nhiều đối tượng, mỗi đối tượng trải qua nhiều trạng thái khác nhau trong suốt vòng đời của mình.
 
 ## Bài 11: Thiết kế
+
+### Câu hỏi
+
+1. Trong Design Class Diagram, một lớp gồm:
+   
+   - Tên lớp
+   
+   - Các thuộc tính đi kèm với kiểu dữ liệu cụ thể
+   
+   - Các phương thức với kiểu trả về
+   
+   - Quyền truy cập
+
+2. 
+   
+- Lớp phân tích: nhấn mạnh các khái niệm nghiệp vụ, ít hoặc không có kiểu dữ liệu và quyền truy cập
+
+- Lớp thiết kế: có thêm các chi tiết kỹ thuật (how): kiểu dữ liệu, visibility, exceptions, interfaces, ...
+3. 
+   
+- Lớp điều khiển có nhiệm vụ thực hiện thao tác điều khiển, kết nối giữa các lớp biên và các lớp thực thể
+
+- Lớp thực thể là các thực thể của hệ thống
+4. Nên dùng lớp kết hợp khi  mà mối liên hệ giữa 2 thực thể cũng mang thông tin riêng.
+
+
+
+## Bài 12:

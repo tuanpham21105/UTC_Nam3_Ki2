@@ -6,7 +6,6 @@ Cài đặt gói bind:
 	yum install bind -y
 
 Cấu hình DNS Server:
-
 	Cài đặt Network:
 		IPv4 để Manual
 		Cài đặt Address (Địa chỉ DNS server), Netmask, DNS (Địa chỉ DNS Server)
@@ -38,6 +37,7 @@ Cấu hình DNS Server:
 					IN A <Địa chỉ của tên miền>
 				ns1	IN A <Địa chỉ của tên miền>
 				mail	IN A <Địa chỉ của tên miền> (Cấu hình cho Mail service)
+				
 		Mở cổng tường lửa:
 			firewall-cmd --permanent --add-port=53/udp
 			firewall-cmd --permanent --add-port=53/tcp

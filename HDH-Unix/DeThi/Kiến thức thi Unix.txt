@@ -1,0 +1,7 @@
+Kiến thức thi Unix:
+	DHCP (Xong)
+	DNS (Xong)
+	WEB (Xong)
+	Cấu hình Router
+	MAIL (Xong)
+	Cấu hình NAT

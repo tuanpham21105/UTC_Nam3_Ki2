@@ -1,0 +1,30 @@
+Lệnh cấu hình DHCP Router Relay
+
+Thêm số lượng Network Adapter cần thiết, tối thiểu là 2, 1 cái chung mạng với dhcp server, 1 cái nối với mạng sẽ cấp phát Ip
+
+Cài đặt packages DHCP: yum install dhcp -y
+
+Cấu hình dịch vụ DHCP trên máy Relay:
+	Thêm file dịch vụ DHCP Relay: cp /lib/systemd/system/dhcrelay.service /etc/systemd/
+	Chỉnh sửa file: gedit /etc/systemd/dhcrelay.service
+		Thêm Ip máy chủ DHCP vào cuối dòng ExecStart: ExecStart=/usr/sbin/dhcrelay -d --no-pid <192.168.1.2>
+	Chỉnh sửa tương tự với file ở /usr/lib/systemd/system/dhcrelay.service
+	
+	Tạo file cấu hình DHCP Relay: gedit /etc/sysconfig/dhcrelay
+	Thêm nội dung: 
+		DHCPINTERFACES="<ens33>" <Tên Card mạng của chung mạng với DHCP Server>
+		DHCPSERVERS="<192.168.1.2>" <Ip DHCP Server>
+		
+Khởi động dịch vụ DHCP Relay:
+	systemctl enable dhcrelay
+	systemctl --system daemon-reload
+	systemctl --system daemon-reexec
+	systemctl force-reload dhcrelay.service
+	systemctl start dhcrelay.service
+	
+Tắt tường lửa: 
+	systemctl stop firewalld
+	systemctl disable firewalld
+	setenforce 0
+	
+Mở máy client chung mạng với mạng được cấp phát, kiểm tra Ipv4 Automatic

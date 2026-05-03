@@ -1,0 +1,51 @@
+Lệnh cấu hình DHCP Server
+
+Đăng nhập Root
+
+Cài đặt packages DHCP: yum install dhcp -y
+
+Thiết lập địa chỉ mạng tĩnh cho DHCP Server
+Thiết lập subnet mask
+Thiết lập Gateway là ip Router(Nếu có)
+Thiết lập DNS là ip DNS Server(Nếu có)
+
+Truy cập file cấu hình của DHCP: gedit /etc/dhcp/dhcpd.conf
+	Sửa nội dung và lưu:
+		# dhcpd.conf
+		#
+		# Sample configuration file for ISC dhcpd
+		#
+
+		# option definitions common to all supported networks...
+		option domain-name "<nsvien.net>";
+		option domain-name-servers ns1.<nsvien.net>, ns2.<nsvien.net>;
+
+		default-lease-time 600;
+		max-lease-time 7200;
+		
+		# Dai dia chi cap cho LAN 1
+		subnet <192.168.1.0> netmask <255.255.255.0> { <Ip mạng và subnet mask> 
+		  range <192.168.1.100> <192.168.1.254>; <Dải Ip cấp phát cho client>
+		  option routers <192.168.1.1>; <Ip  router>
+		  option domain-name-servers <192.168.1.2>; <Ip DNS Server>
+		}
+		
+		# Dai dia chi cap cho LAN 2
+		subnet <10.0.0.0> netmask <255.255.255.0> { <Ip mạng và subnet mask> 
+		  range <10.0.0.100> <10.0.0.254>; <Dải Ip cấp phát cho client>
+		  option routers <10.0.0.1>; <Ip  router>
+		  option domain-name-servers <192.168.1.2>; <Ip DNS Server>
+		}
+		
+Chạy dịch vụ DHCP: systemctl start dhcpd
+Kiểm tra dịch vụ DHCP: systemctl status dhcpd
+
+Cài đặt Network Adapter cho máy ảo thành Virtual Network loại Custom. Ví dụ: VMnet2
+
+Mở máy client cùng Network Adapter để kiểm tra DHCP Server có hoạt động ko
+Chỉnh Network Ipv4 thành Automatic, kiểm tra ip của Client có nằm trong dải địa chỉ ip cho trước ko
+
+Kiểm tra những Ip và DHCP Server đã cấp phát: gedit /var/lib/dhcpd/dhcpd.leases
+
+
+

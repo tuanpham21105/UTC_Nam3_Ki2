@@ -14,7 +14,7 @@ Tạo file html cho website:
 			<h1 align=center style=color:red>Welcome to <Tên website>'s website!</h1>
 		</html>
 	
-Cấu hình website:
+Cấu hình dịch vụ HTTP:
 	Chạy: gedit /etc/httpd/conf/httpd.conf
 	Thêm vào file:
 		<VirtualHost *>
