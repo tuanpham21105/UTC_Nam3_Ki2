@@ -2,6 +2,6 @@ Kiến thức thi Unix:
 	DHCP (Xong)
 	DNS (Xong)
 	WEB (Xong)
-	Cấu hình Router
+	Cấu hình Router Relay (Xong)
 	MAIL (Xong)
 	Cấu hình NAT

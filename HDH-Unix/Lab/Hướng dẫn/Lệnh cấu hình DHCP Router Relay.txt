@@ -8,7 +8,7 @@ Cấu hình dịch vụ DHCP trên máy Relay:
 	Thêm file dịch vụ DHCP Relay: cp /lib/systemd/system/dhcrelay.service /etc/systemd/
 	Chỉnh sửa file: gedit /etc/systemd/dhcrelay.service
 		Thêm Ip máy chủ DHCP vào cuối dòng ExecStart: ExecStart=/usr/sbin/dhcrelay -d --no-pid <192.168.1.2>
-	Chỉnh sửa tương tự với file ở /usr/lib/systemd/system/dhcrelay.service
+	Chỉnh sửa tương tự với file: gedit /usr/lib/systemd/system/dhcrelay.service
 	
 	Tạo file cấu hình DHCP Relay: gedit /etc/sysconfig/dhcrelay
 	Thêm nội dung: 

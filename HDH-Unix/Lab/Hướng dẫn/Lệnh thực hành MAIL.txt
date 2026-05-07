@@ -10,7 +10,7 @@ Cài đặt gói postfix, dovecot, telnet:
 Cấu hình dịch vụ Mail:
 	Mở file cấu hình DNS: gedit /etc/named.conf
 		Thêm nội dung vào mục options trong file, chỉ thêm vào các máy Client của DNS server, ko thêm vào server DNS:
-			forwarders: { 8.8.8.8; };
+			forwarders { 8.8.8.8; };
 		Nếu là DNS Server:
 			Chứa zone (Tên miền) của tất cả các zone khác:
 		Nếu là DNS Client:
@@ -20,8 +20,10 @@ Cấu hình dịch vụ Mail:
 				type master;
 				file "<tên miền>.<đuôi>";
 			};
+			
+Cấu hình PostFix trên Server:
 	Mở file cấu hình Postfix: gedit /etc/postfix/main.cf
-	Sửa nội dung:
+	Thêm nội dung:
 		myhostname = mail.<Tên miền>.<Đuôi>
 		mydomain = <Tên miền>.<Đuôi>
 
@@ -35,14 +37,13 @@ Cấu hình dịch vụ Mail:
 
 		home_mailbox = Maildir/
 
-
 		smtpd_sasl_auth_enable = yes
 		smtpd_sasl_type = dovecot
 		smtpd_sasl_path = private/auth
 		smtpd_sasl_security_options = noanonymous
 		broken_sasl_auth_clients = yes
 	
-Cấu hình Dovecot:
+Cấu hình Dovecot trên Server:
 	Mở file: gedit /etc/dovecot/conf.d/10-master.conf
 	Thay thế dòng 89 đến hết dòng 93 bằng:
 		 unix_listener /var/spool/postfix/private/auth {
@@ -53,6 +54,8 @@ Cấu hình Dovecot:
 	Mở file: gedit /etc/dovecot/conf.d/10-mail.conf
 	Thêm vào dòng 31 nội dung sau:
 		mail_location = maildir:~/Maildir
+
+Khởi động lại máy
 		
 Mở cổng tường lửa:
 	firewall-cmd --permanent --add-port=25/tcp
@@ -66,4 +69,29 @@ Chạy dịch vụ Mail:
 	systemctl start postfix
 	systemctl start dovecot
 
-
+Gửi Mail từ nsvien.thi tới hanoi.com:
+	Tạo User để gửi Mail:
+		useradd <Tên user>
+		passwd 123
+		Đăng nhập user: su <Tên user>
+	Bắt đầu gửi mail:
+		telnet mail.<nsvien.thi> 25 
+		hoặc
+		telnet localhost 25
+		Điền thông tin:
+			helo nsvien.thi
+			mail from:<user@nsvien.thi>
+			rcpt to:<user@hanoi.com>
+			data
+			<Hello mail from nsvien.thi server>
+			. (Kết thúc mail)
+			quit
+		
+Xem Mail:
+	telnet localhost 110
+	Điền thông tin:
+		user user
+		pass 123
+		list
+		retr 1
+		quit

@@ -4,39 +4,67 @@ Vào chế độ root
 
 Cài đặt gói bind:
 	yum install bind -y
+	
+Cài đặt Network:
+	IPv4 để Manual
+	Cài đặt Address (Địa chỉ DNS server), Netmask, DNS (Địa chỉ DNS Server)
 
-Cấu hình DNS Server:
-	Cài đặt Network:
-		IPv4 để Manual
-		Cài đặt Address (Địa chỉ DNS server), Netmask, DNS (Địa chỉ DNS Server)
-
+Cấu hình DNS Server Master:
 	Cấu hình dịch vụ DNS:
 		gedit /etc/named.conf
 			Sửa:
 				listen-on port 53 { any; };
 				allow-query { any; };
-			Thêm tên miền:
+			Thêm các Zone tên miền:
 				zone "<tên miền>.<đuôi>" IN {
 					type master;
-					file "<tên miền>.<đuôi>";
+					file "<tên miền>.<đuôi>.dns";
+					allow-transfer {<Ip của DNS Server Slave>; <Ip của DNS Server Slave>;}; (Cấu hình cho DNS Master)
 				};
-		Thêm tệp cơ sở dữ liệu:
-			Tạo file CSDL ở /var/named với tên <tên miền>.<đuôi>
+			Thêm Zone reverse, chỉ thêm trên DNS Server Master, nếu cần:
+				zone "<1.168.192>.in-addr.arpa" IN {
+				    	type master;
+				    	file "reverse";
+					allow-transfer {<Ip của các DNS Server Slave>;};
+				};
+				
+		Thêm file DNS Zone:
+			Tạo file DNS Record ở /var/named với tên <tên miền>.<đuôi>.dns
 			Thêm nội dung:
 				$TTL 86400
-				@ IN SOA ns1.<tên miền>.<đuôi>. root.<tên miền>.<đuôi>. 
-					(
+				@ IN SOA ns1.<tên miền>.<đuôi>. root.<tên miền>.<đuôi>. (
 					1
 					2
 					3
 					4
-					5
-					)
-					IN NS ns1.<tên miền>.<đuôi>.
-					IN MX 10 mail.<tên miền>.<đuôi>. (Cấu hình cho Mail service)
-					IN A <Địa chỉ của tên miền>
-				ns1	IN A <Địa chỉ của tên miền>
-				mail	IN A <Địa chỉ của tên miền> (Cấu hình cho Mail service)
+					5 )
+					IN NS ns1.<tên miền>.<đuôi>. (Bản ghi Name Server)
+					IN A <Địa chỉ của tên miền> (Bản ghi A)
+					IN MX 10 mail.<tên miền>.<đuôi>. (Cấu hình cho Mail service, MX)
+				ns1	IN A <Địa chỉ của tên miền> (Bản ghi A)
+				mail	IN A <Địa chỉ của tên miền> (Cấu hình cho Mail service, MX)
+				www 	IN A <Địa chỉ của tên miền> (Cấu hình bản ghi A)
+				web 	IN CNAME www.<tên miền>.<đuôi>. (Cấu hình bản ghi CNAME)
+			
+		Thêm file Reverse Zone:
+			Tạo file:
+				gedit /var/named/reverse
+			Thêm nội dung:
+				$TTL 86400
+				@ IN SOA ns1.<nsvien.thi>. root.<nsvien.thi>. (
+				    1
+				    2
+				    3
+				    4
+				    5
+				)
+
+				@ IN NS ns1.<nsvien.thi>.
+
+				<1> IN PTR ns1.<nsvien.thi>. (Điền số ứng với đuôi Ip của DNS Server)
+				<2> IN PTR ns2.<nsvien.thi>.
+				<3> IN PTR ns3.<nsvien.thi>.
+				<4> IN PTR ns4.<nsvien.thi>.	
 				
 		Mở cổng tường lửa:
 			firewall-cmd --permanent --add-port=53/udp
@@ -46,6 +74,36 @@ Cấu hình DNS Server:
 			
 	Chạy dịch vụ DNS:
 		systemctl start named
+
+Cấu hình DNS Server Slave:
+	Cấu hình DNS:
+		gedit /etc/named.conf
+			Sửa:
+				listen-on port 53 { any; };
+				allow-query { any; };
+			Thêm:
+				forwarders { 8.8.8.8; };
+			Thêm các Zone:
+				zone "<nsvien.thi>" IN {
+				    type slave;
+				    masters { <Ip DNS Server Master>; };
+				    file "slaves/<nsvien.thi>.dns";
+				};
+			Thêm Reverse Zone:
+				zone "<1.168.192>.in-addr.arpa" IN {
+				    type slave;
+				    masters { <Ip DNS Server Master>; };
+				    file "slaves/reverse";
+				};
+	Tạo thư mục Slaves cho các Zone:
+		mkdir -p /var/named/slaves
+	Mở cổng tường lửa:
+		firewall-cmd --permanent --add-port=53/udp
+		firewall-cmd --permanent --add-port=53/tcp
+		firewall-cmd --reload
+		setenforce 0
+	Khởi động dịch vụ DNS, Slave sẽ tự động sync từ Master:
+		systemctl start named
 		
 Cấu hình Client dùng DNS server:
 	Cài đặt Network:
@@ -54,4 +112,5 @@ Cấu hình Client dùng DNS server:
 
 Kiểm tra dịch vụ DNS:
 	nslookup
-		<Tên miền>.<Đuôi>
+	>	<Tên miền>.<Đuôi>
+	>	<Địa chỉ Ip> (Nếu có Reverse)

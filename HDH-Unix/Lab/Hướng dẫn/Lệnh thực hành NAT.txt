@@ -1,0 +1,54 @@
+Lệnh thực hành NAT
+
+Cấu hình các Card mạng nối vào các mạng phù hợp
+
+Cài đặt package firewalld: yum install firewalld -y
+
+Kích hoạt Ip Forwarding:
+	Sửa file systctl cho phép forward ipv4: 
+		echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+	Áp dụng cấu hình:
+		sysctl -p
+
+Cấu hình zones cho Firewall
+	Lấy ra tất cả các zones: 
+		firewall-cmd --get-zones
+	Lấy ra các zones có Interfaces:
+		firewall-cmd --get-active-zones
+	Tạo mạng LAN trong zone Trusted:
+		firewall-cmd --permanent --zone=trusted --add-source=<192.168.1>.0/24
+	Thêm Interface(Là tên của Card mạng trong hệ thống) vào zone:
+		firewall-cmd --zone=<external> --change-interface=<ens33> --permanent
+	Cấu hình dịch vụ cần thiết cho phép đi vào Zone:
+		Lệnh thêm dịch vụ:
+			firewall-cmd --zone=<internal> --add-service=<ssh> --permanent
+		Dịch vụ SSH, dùng cho quản lý Server
+		Dịch vụ HTTP, HTTPS, dùng cho dịch vụ Web
+		Dịch vụ DNS
+		Ko cần thêm dịch vụ cho Zone external
+	Áp dụng cấu hình:
+		firewall-cmd --reload
+
+Cấu hình NAT cho zone cần được Port Forwarding:
+	Bật masquerade cho zone External nếu chưa bật:
+		firewall-cmd --zone=<external> --add-masquerade --permanent
+	Thêm rule chuyển tiếp request từ zone Internal vào zone External:
+		firewall-cmd --permanent --direct --passthrough ipv4 -t nat -I POSTROUTING -o <ens33 (Interface của mạng external)> -j MASQUERADE -s <192.168.1.0 (Ip mạng internal)>/24
+	Thêm rule để public Web Server ở Internal ra External:
+		firewall-cmd --permanent --zone=external --add-forward-port=port=80:proto=tcp:toport=80:toaddr=<192.168.1.10 (Ip Web Server)>
+	Áp dụng cấu hình:
+		firewall-cmd --reload
+
+Cấu hình Forwarding Policies, chặn ko cho phép request từ Zone A đến Zone B:
+	Tạo policy mới:
+		firewall-cmd --permanent --new-policy <blockDmzToInternal>
+	Khai báo Zone A:
+		firewall-cmd --permanent --policy <blockDmzToInternal> --add-ingress-zone <dmz>
+	Khai báo Zone B:
+		firewall-cmd --permanent --policy <blockDmzToInternal> --add-egress-zone <internal>
+	Cấu hình rule là Từ chối:
+		firewall-cmd --permanent --policy <blockDmzToInternal> --set-target <REJECT>
+	Áp dụng cấu hình:
+		firewall-cmd --reload
+
+Nếu 2 máy ở 2 Network khác nhau, thêm tất cả các DNS Server vào mạng của máy đó
