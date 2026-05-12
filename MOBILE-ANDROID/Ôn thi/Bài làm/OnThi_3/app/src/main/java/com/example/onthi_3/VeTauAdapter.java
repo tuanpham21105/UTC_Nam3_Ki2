@@ -1,4 +1,4 @@
-package com.example.onthi_2;
+package com.example.onthi_3;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,18 +10,18 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class BaiHatAdapter extends BaseAdapter {
+public class VeTauAdapter extends BaseAdapter {
     private Activity activity;
-    public List<BaiHat> data;
+    public List<VeTau> data;
     private LayoutInflater inflater;
 
-    public BaiHatAdapter(Activity activity, List<BaiHat> data) {
+    public VeTauAdapter(Activity activity, List<VeTau> data) {
         this.activity = activity;
         this.data = data;
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public BaiHatAdapter() {
+    public VeTauAdapter() {
     }
 
     @Override
@@ -30,7 +30,7 @@ public class BaiHatAdapter extends BaseAdapter {
     }
 
     @Override
-    public BaiHat getItem(int position) {
+    public VeTau getItem(int position) {
         return data.get(position);
     }
 
@@ -44,19 +44,22 @@ public class BaiHatAdapter extends BaseAdapter {
         View v = convertView;
 
         if (v == null) {
-            v = inflater.inflate(R.layout.baihat_item, null);
+            v = inflater.inflate(R.layout.vetau_item, null);
         }
 
-        BaiHat a = getItem(position);
+        VeTau a = getItem(position);
 
-        TextView tenBaiHat = v.findViewById(R.id.textViewTenBaiHat);
-        tenBaiHat.setText(a.ten);
+        TextView gaDi = v.findViewById(R.id.textViewGaDi);
+        gaDi.setText(a.gaDi);
 
-        TextView tenCaSi = v.findViewById(R.id.textViewTenCaSi);
-        tenCaSi.setText(a.tenCaSi);
+        TextView gaDen = v.findViewById(R.id.textViewGaDen);
+        gaDen.setText(a.gaDen);
 
-        TextView diem = v.findViewById(R.id.textViewDiem);
-        diem.setText(String.valueOf(a.diem));
+        TextView loai = v.findViewById(R.id.textViewLoai);
+        loai.setText(a.loai ? "Khu hoi" : "Mot chieu");
+
+        TextView gia = v.findViewById(R.id.textViewGia);
+        gia.setText(String.valueOf(a.gia));
 
         return v;
     }
