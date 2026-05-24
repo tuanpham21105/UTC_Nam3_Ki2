@@ -44,7 +44,7 @@ Cấu hình DNS Server Master:
 				ns1	IN A <Địa chỉ của tên miền> (Bản ghi A)
 				mail	IN A <Địa chỉ của tên miền> (Cấu hình cho Mail service, MX)
 				www 	IN A <Địa chỉ của tên miền> (Cấu hình bản ghi A)
-				web 	IN CNAME www.<tên miền>.<đuôi>. (Cấu hình bản ghi CNAME)
+				ftp 	IN CNAME www.<tên miền>.<đuôi>. (Cấu hình bản ghi CNAME)
 			
 		Thêm file Reverse Zone:
 			Tạo file:
@@ -61,10 +61,10 @@ Cấu hình DNS Server Master:
 
 				@ IN NS ns1.<nsvien.thi>.
 
-				<1> IN PTR ns1.<nsvien.thi>. (Điền số ứng với đuôi Ip của DNS Server)
-				<2> IN PTR ns2.<nsvien.thi>.
-				<3> IN PTR ns3.<nsvien.thi>.
-				<4> IN PTR ns4.<nsvien.thi>.	
+				<100> IN PTR www.<nsvien.thi>. (Điền số ứng với đuôi Ip của DNS Server)
+				<10> IN PTR ns2.<nsvien.thi>.
+				<20> IN PTR ns3.<nsvien.thi>.
+				<30> IN PTR ns4.<nsvien.thi>.	
 				
 		Mở cổng tường lửa:
 			firewall-cmd --permanent --add-port=53/udp
@@ -82,7 +82,7 @@ Cấu hình DNS Server Slave:
 				listen-on port 53 { any; };
 				allow-query { any; };
 			Thêm:
-				forwarders { 8.8.8.8; };
+				forwarders { 100.100.100.100; };
 			Thêm các Zone:
 				zone "<nsvien.thi>" IN {
 				    type slave;
@@ -114,3 +114,6 @@ Kiểm tra dịch vụ DNS:
 	nslookup
 	>	<Tên miền>.<Đuôi>
 	>	<Địa chỉ Ip> (Nếu có Reverse)
+	
+	
+	sudo timedatectl set-timezone Asia/Ho_Chi_Minh

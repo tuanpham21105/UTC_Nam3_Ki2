@@ -1,0 +1,8 @@
+Điểm kì 2 Năm 3
+OOAD - QT: - Thi: 
+API - QT: 9.7 - Thi: 9.5
+Unix - QT: 10 - Thi: 10
+ATTT - QT: 9.1 - Thi: 
+Android - QT: 9.5 - Thi: 
+AI - QT: - Thi: 
+

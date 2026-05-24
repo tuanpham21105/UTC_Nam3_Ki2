@@ -30,12 +30,15 @@ Cấu hình zones cho Firewall
 		firewall-cmd --reload
 
 Cấu hình NAT cho zone cần được Port Forwarding:
+	Xem rule forward:
+		firewall-cmd --list-forward-ports
 	Bật masquerade cho zone External nếu chưa bật:
 		firewall-cmd --zone=<external> --add-masquerade --permanent
-	Thêm rule chuyển tiếp request từ zone Internal vào zone External:
-		firewall-cmd --permanent --direct --passthrough ipv4 -t nat -I POSTROUTING -o <ens33 (Interface của mạng external)> -j MASQUERADE -s <192.168.1.0 (Ip mạng internal)>/24
-	Thêm rule để public Web Server ở Internal ra External:
-		firewall-cmd --permanent --zone=external --add-forward-port=port=80:proto=tcp:toport=80:toaddr=<192.168.1.10 (Ip Web Server)>
+	Thêm rule chuyển tiếp từ cổng 80 external vào DMZ Web Server:
+		firewall-cmd --zone=external --add-forward-port=port=80:proto=tcp:toaddr=<192.168.100.10> --permanent
+	Thêm rule chuyển tiếp từ cổng 53 external vào Internal DNS Server:
+		firewall-cmd --zone=external --add-forward-port=port=53:proto=tcp:toaddr=<10.0.0.10> --permanent
+		firewall-cmd --zone=external --add-forward-port=port=53:proto=udp:toaddr=<192.168.100.10> --permanent
 	Áp dụng cấu hình:
 		firewall-cmd --reload
 

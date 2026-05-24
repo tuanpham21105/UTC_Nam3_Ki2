@@ -13,8 +13,6 @@ Cấu hình dịch vụ Mail:
 			forwarders { 8.8.8.8; };
 		Nếu là DNS Server:
 			Chứa zone (Tên miền) của tất cả các zone khác:
-		Nếu là DNS Client:
-			Chỉ chứa zone của client
 		Mẫu zone:
 			zone "<tên miền>.<đuôi>" IN {
 				type master;
@@ -65,6 +63,7 @@ Mở cổng tường lửa:
 	setenforce 0
 		
 Chạy dịch vụ Mail:
+	systemctl start httpd
 	systemctl start named
 	systemctl start postfix
 	systemctl start dovecot
@@ -95,3 +94,5 @@ Xem Mail:
 		list
 		retr 1
 		quit
+		
+Lệnh clear Inbox: rm -f /home/pmtuan/Maildir/cur/*
