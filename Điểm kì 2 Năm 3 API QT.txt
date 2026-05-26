@@ -2,7 +2,7 @@
 OOAD - QT: - Thi: 
 API - QT: 9.7 - Thi: 9.5
 Unix - QT: 10 - Thi: 10
-ATTT - QT: 9.1 - Thi: 
+ATTT - QT: 9.1 - Thi: 10 (Dự kiến)
 Android - QT: 9.5 - Thi: 
 AI - QT: - Thi: 
 

@@ -2,15 +2,29 @@
 
 ## Lớp GlobalUtils
 
-## Hàm sinh ID
+## Tạo lớp Object
+
+## Hàm tính trong lớp Object
+
+## Hàm sinh ID cho lớp Object
 
 ## Lớp CSDL
 
-## Lớp Adapter
-
 ## Toast
 
+## Lớp Adapter
+
 ## Hàm Sort data trong Adapter
+
+## Hàm Search cho Search Edit Text
+
+## Tạo Context Menu 
+
+## Xử lý khi chọn item trong Context Menu
+
+## Tạo FLoating dialog
+
+## Hàm xóa dữ liệu trong SQL và Adapter
 
 ## Mở Activity mới với dữ liệu đầu vào
 
@@ -18,12 +32,6 @@
 
 ## Activity mới
 
-## Hàm Search cho Search Edit Text
-
-## Tạo Context Menu
-
-## Xử lý khi chọn item trong Context Menu
+## Kết thúc Activity
 
 ## Tạo Options Menu (Thanh Header)
-
-## Tạo FLoating dialog

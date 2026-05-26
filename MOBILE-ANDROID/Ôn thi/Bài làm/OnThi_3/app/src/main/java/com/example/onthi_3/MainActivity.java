@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
     MyDb db;
 
-    BroadcastReceiver broadcastReceiver;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,22 +62,7 @@ public class MainActivity extends AppCompatActivity {
         searchEt.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
-                String keyword = searchEt.getText().toString().trim().toLowerCase();
-
-                adapter.data.clear();
-
-                if (keyword.isBlank()) {
-                    adapter.data.addAll(db.getAll());
-                }
-                else {
-                    for (VeTau v : db.getAll()) {
-                        if (v.gaDen.trim().toLowerCase().contains(keyword) || v.gaDi.trim().toLowerCase().contains(keyword)) {
-                            adapter.data.add(v);
-                        }
-                    }
-                }
-
-                adapter.notifyDataSetChanged();
+                search();
             }
 
             @Override
@@ -96,6 +79,25 @@ public class MainActivity extends AppCompatActivity {
         registerForContextMenu(veTauLv);
 
         initBroadcastReceiver();
+    }
+
+    void search() {
+        String keyword = searchEt.getText().toString().trim().toLowerCase();
+
+        adapter.data.clear();
+
+        if (keyword.isBlank()) {
+            adapter.data.addAll(db.getAll());
+        }
+        else {
+            for (VeTau v : db.getAll()) {
+                if (v.gaDen.trim().toLowerCase().contains(keyword) || v.gaDi.trim().toLowerCase().contains(keyword)) {
+                    adapter.data.add(v);
+                }
+            }
+        }
+
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -178,6 +180,8 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+
+    BroadcastReceiver broadcastReceiver;
     private void initBroadcastReceiver() {
         broadcastReceiver = new BroadcastReceiver() {
             @Override

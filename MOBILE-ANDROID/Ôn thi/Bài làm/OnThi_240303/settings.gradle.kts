@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "OnThi_240303"
 include(":app")
+include(":app")
  

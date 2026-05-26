@@ -116,6 +116,26 @@ public class MainActivity extends AppCompatActivity {
         KhachHang a = myAdapter.getItem(position);
 
         if (item.getItemId() == R.id.menuItemXoa) {
+            OpenFloatingDialog(a);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    void DeleteItem(int position) {
+        KhachHang a = myAdapter.getItem(position);
+
+        myDb.delete(a.getMa());
+
+        myAdapter.data.remove(position);
+
+        myAdapter.notifyDataSetChanged();
+
+        UpdateTrungBinh();
+    }
+
+    void OpenFloatingDialog(KhachHang a) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("Delete");
             builder.setMessage(String.format(
@@ -139,22 +159,5 @@ public class MainActivity extends AppCompatActivity {
             });
 
             builder.show();
-
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    void DeleteItem(int position) {
-        KhachHang a = myAdapter.getItem(position);
-
-        myDb.delete(a.getMa());
-
-        myAdapter.data.remove(position);
-
-        myAdapter.notifyDataSetChanged();
-
-        UpdateTrungBinh();
     }
 }
